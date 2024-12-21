@@ -1,115 +1,148 @@
-import React from 'react';
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../provider/AuthProvider"; // Import the context
 
 const FAQ = () => {
-    return (
-      <div className="mt-11 flex max-sm:flex-col gap-8">
-        <section className="w-[100%] md:w-1/2">
-          <div className="collapse collapse-plus bg-base-200">
-            <input type="radio" name="my-accordion-3" defaultChecked />
-            <div className="collapse-title text-xl font-medium">
-              How can I make a donation?
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const { dark } = useContext(AuthContext); // Access the dark mode value
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form Data Submitted: ", formData);
+    // Add your form submission logic here
+  };
+
+  const faqs = [
+    {
+      question: "What is the purpose of this website?",
+      answer:
+        "This website is designed to help users connect, find, and recover lost items through community support.",
+    },
+    {
+      question: "How can I report a lost item?",
+      answer:
+        "You can report a lost item by navigating to the 'Lost Items' section and filling out the provided form.",
+    },
+    {
+      question: "Is there a fee to use this platform?",
+      answer: "No, our platform is completely free to use for all users.",
+    },
+    {
+      question: "How do I contact support?",
+      answer:
+        "You can contact support by filling out the feedback form below or emailing us directly at support@example.com.",
+    },
+  ];
+
+  return (
+    <div
+      className={`py-16 px-8 ${
+        dark ? "bg-gray-800 text-gray-200" : "bg-gray-50 text-gray-800"
+      }`}
+    >
+      {/* FAQ Section */}
+      <div className="container mx-auto">
+        <h2 className="text-4xl font-bold text-center text-orange-500">
+          Frequently Asked Questions
+        </h2>
+        <div className="mt-10 space-y-6">
+          {faqs.map((faq, index) => (
+            <div
+              key={index}
+              className={`p-6 rounded shadow ${
+                dark ? "bg-gray-700 text-gray-300" : "bg-white"
+              }`}
+            >
+              <h3 className="text-lg font-semibold">{faq.question}</h3>
+              <p className="mt-2">{faq.answer}</p>
             </div>
-            <div className="collapse-content">
-              <p>
-                You can make a donation by visiting our website, selecting a
-                campaign, and clicking on the "Donate Now" button. You’ll be
-                guided through a secure process to complete your contribution.
-              </p>
-            </div>
-          </div>
-          <div className="collapse collapse-plus bg-base-200">
-            <input type="radio" name="my-accordion-3" />
-            <div className="collapse-title text-xl font-medium">
-              Is my donation tax-deductible?
-            </div>
-            <div className="collapse-content">
-              <p>
-                Yes, donations are tax-deductible if they meet the criteria of
-                your country's tax laws. After completing your donation, you'll
-                receive a receipt that can be used for tax purposes. Check with
-                your local tax authority for specific regulations.
-              </p>
-            </div>
-          </div>
-          {/* 3 */}
-          <div className="collapse collapse-plus bg-base-200">
-            <input type="radio" name="my-accordion-3" />
-            <div className="collapse-title text-xl font-medium">
-              How will my donation be used?
-            </div>
-            <div className="collapse-content">
-              <p>
-                Your donation will directly support the selected campaign. The
-                funds are allocated for the purposes mentioned in the campaign
-                description, such as helping individuals, funding projects, or
-                supporting causes.
-              </p>
-            </div>
-          </div>
-          <div className="collapse collapse-plus bg-base-200">
-            <input type="radio" name="my-accordion-3" />
-            <div className="collapse-title text-xl font-medium">
-              Promoting Sustainability:
-            </div>
-            <div className="collapse-content">
-              <p>
-                We aim to ensure that our actions contribute to the preservation
-                of resources and a better environment for future generations.
-              </p>
-            </div>
-          </div>
-          <div className="collapse collapse-plus bg-base-200">
-            <input type="radio" name="my-accordion-3" />
-            <div className="collapse-title text-xl font-medium">
-              Making a Difference
-            </div>
-            <div className="collapse-content">
-              <p>
-                Through our initiatives, we strive to leave a lasting, positive
-                impact on society, encouraging others to join in creating a
-                brighter future.
-              </p>
-            </div>
-          </div>
-          <div className="collapse collapse-plus bg-base-200">
-            <input type="radio" name="my-accordion-3" />
-            <div className="collapse-title text-xl font-medium">
-              Advancing Education:
-            </div>
-            <div className="collapse-content">
-              <p>
-                We are passionate about bridging the education gap by providing
-                access to knowledge, training, and resources, empowering
-                individuals to achieve their goals and dreams.
-              </p>
-            </div>
-          </div>
-          <div className="collapse collapse-plus bg-base-200">
-            <input type="radio" name="my-accordion-3" />
-            <div className="collapse-title text-xl font-medium">
-              Encouraging Collaboration
-            </div>
-            <div className="collapse-content">
-              <p>
-                By fostering partnerships and teamwork, we aim to build a
-                collective force that maximizes impact and brings innovative
-                solutions to life pporting causes.
-              </p>
-            </div>
-          </div>
-        </section>
-        <section className="flex justify-center items-center w-[100%] md:w-1/2 mx-auto">
-          <dotlottie-player
-            src="https://lottie.host/9e36df89-eeb3-4209-b41d-0fc512841847/WmqBp5K45a.lottie"
-            background="transparent"
-            speed="1"
-            loop
-            autoplay
-            className="w-full h-full"
-          ></dotlottie-player>
-        </section>
+          ))}
+        </div>
       </div>
-    );
+
+      {/* Feedback Form */}
+      <div
+        className={`mt-16 container mx-auto p-8 rounded shadow ${
+          dark ? "bg-gray-700 text-gray-300" : "bg-white"
+        }`}
+      >
+        <h2 className="text-2xl font-bold mb-4">Feedback</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-sm font-medium">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className={`w-full rounded border ${
+                dark
+                  ? "bg-gray-800 text-gray-300 border-gray-600 focus:ring-orange-500 focus:border-orange-500"
+                  : "bg-white border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+              }`}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-sm font-medium">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className={`w-full rounded border ${
+                dark
+                  ? "bg-gray-800 text-gray-300 border-gray-600 focus:ring-orange-500 focus:border-orange-500"
+                  : "bg-white border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+              }`}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="message" className="block text-sm font-medium">
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              className={`w-full rounded border ${
+                dark
+                  ? "bg-gray-800 text-gray-300 border-gray-600 focus:ring-orange-500 focus:border-orange-500"
+                  : "bg-white border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+              } h-32`}
+              required
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            className="bg-orange-500 text-white py-2 px-6 rounded hover:bg-orange-600"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default FAQ;

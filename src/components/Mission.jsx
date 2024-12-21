@@ -8,67 +8,80 @@ const Mission = () => {
   const missions = [
     {
       id: 1,
-      icon: "📚", 
-      title: "Free Education",
+      icon: "📦", // Icon for Found Items
+      title: "Found Items",
       description:
-        "We aim to provide free education to underprivileged children and ensure access to learning materials.",
+        "Browse items reported found to reconnect them with their rightful owners.",
     },
     {
       id: 2,
-      icon: "🍲", 
-      title: "Feed Poor Child",
+      icon: "🔍", // Icon for Lost Items
+      title: "Lost Items",
       description:
-        "Our mission is to end child hunger by providing nutritious meals to children in need.",
+        "Report your lost belongings and let the community help locate them.",
     },
     {
       id: 3,
-      icon: "💊", 
-      title: "Free Medicines",
+      icon: "📃", // Icon for Guidelines
+      title: "Guidelines",
       description:
-        "Providing essential medicines free of cost to those who cannot afford them.",
+        "Learn how to report and claim lost or found items securely.",
     },
     {
       id: 4,
-      icon: "🏠", 
-      title: "Give Shelter",
+      icon: "🤝", // Icon for Community Support
+      title: "Community Support",
       description:
-        "Helping the homeless find shelter and a place to call home.",
+        "Engage with others to assist in returning lost items to owners.",
     },
   ];
+
   return (
     <>
-      <div className="py-16 bg-base-100">
+      <div className={`py-16 }`}>
         <Fade delay={1e3} cascade damping={1e-1}>
           <div className="text-center">
-            <h2 className="text-4xl font-bold text-orange-500">OUR MISSION</h2>
+            <h2 className="text-4xl font-extrabold text-orange-500">
+              OUR MISSION
+            </h2>
 
-            <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Our mission is to empower individuals, communities, and
-              organizations by providing innovative solutions, fostering growth,
-              and making a meaningful impact on the world. We are committed to
-              creating opportunities, driving positive change, and building a
-              future where everyone can thrive.
+            <p
+              className={`mt-4 text-lg ${
+                dark ? "text-gray-300" : "text-gray-700"
+              } max-w-2xl mx-auto`}
+            >
+              Empowering individuals and communities by fostering innovation,
+              creating opportunities, and making a meaningful impact on the
+              world.
             </p>
           </div>
         </Fade>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 px-6 lg:px-20">
           {missions.map((mission) => (
             <div
               key={mission.id}
-              className="card bg-base-200 shadow-md p-6 border-t-4 border-orange-500"
+              className="group relative bg-white dark:bg-gray-700 rounded-lg shadow-lg hover:shadow-2xl transform transition-transform duration-300 hover:scale-105 border border-gray-200 dark:border-gray-600"
             >
-              <div className="flex justify-center text-5xl">{mission.icon}</div>
-              <h3 className="text-xl font-bold text-orange-500 text-center mt-4">
-                {mission.title}
-              </h3>
-              <p className="mt-2 text-gray-600 dark:text-gray-400 text-center">
-                {mission.description}
-              </p>
-              <div className="text-center mt-4">
-                <button className="btn btn-outline btn-primary btn-sm">
-                  Read more
-                </button>
+              <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white rounded-full w-20 h-20 flex items-center justify-center text-4xl shadow-lg group-hover:bg-orange-600 transition-colors duration-300">
+                {mission.icon}
+              </div>
+              <div className="p-6 pt-14">
+                <h3 className="text-xl font-bold text-center text-orange-500 dark:text-orange-400">
+                  {mission.title}
+                </h3>
+                <p
+                  className={`mt-4 text-center ${
+                    dark ? "text-gray-300" : "text-gray-300"
+                  }`}
+                >
+                  {mission.description}
+                </p>
+                <div className="mt-6 text-center">
+                  <button className="btn btn-sm btn-outline btn-primary group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300">
+                    Read more
+                  </button>
+                </div>
               </div>
             </div>
           ))}
