@@ -26,7 +26,7 @@ const AuthProvider = ({ children }) => {
 
   // Update the theme whenever `dark` changes
   useEffect(() => {
-    const theme = dark ? "forest" : "bumblebee";
+    const theme = dark ? "forest" : "light";
     document.getElementsByTagName("html")[0].setAttribute("data-theme", theme);
 
     // Save the preference to localStorage

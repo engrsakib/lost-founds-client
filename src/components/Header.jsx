@@ -8,9 +8,8 @@ import { signOut } from "firebase/auth";
 import Swal from "sweetalert2";
 
 const Header = () => {
-  const {setdark, dark, user} = useContext(AuthContext);
-  const singOut = ()=>{
-
+  const { setdark, dark, user } = useContext(AuthContext);
+  const singOut = () => {
     Swal.fire({
       title: "Are You want to Sing Out",
       showDenyButton: true,
@@ -28,16 +27,14 @@ const Header = () => {
           .catch((error) => {
             // An error happened.
           });
-
       } else if (result.isDenied) {
         Swal.fire("You are stay LogIn", "", "info");
       }
     });
-    
-  }
-  const handletheme = ()=>{
-    setdark(!dark)
-  }
+  };
+  const handletheme = () => {
+    setdark(!dark);
+  };
   const links = (
     <>
       <NavLink
@@ -60,8 +57,13 @@ const Header = () => {
         }
         to={`/donation/all-campagion`}
       >
-        All Campaign
+        Lost & Found
       </NavLink>
+    </>
+  );
+
+  const menuLinks = (
+    <>
       <NavLink
         className={({ isActive }) =>
           `px-4 py-2 rounded ${
@@ -98,6 +100,20 @@ const Header = () => {
       >
         My Donation
       </NavLink>
+      <NavLink
+        className={({ isActive }) =>
+          `px-4 py-2 rounded ${
+            isActive
+              ? "bg-green-500 text-white"
+              : "bg-transparent hover:bg-red-400"
+          } ${dark ? "text-gray-50" : "text-gray-800"}`
+        }
+        to={`/donation/my-donation`}
+      >
+        <li>
+          <button onClick={singOut}>Logout</button>
+        </li>
+      </NavLink>
     </>
   );
   return (
@@ -132,7 +148,7 @@ const Header = () => {
             to={`/`}
             className={`text-2xl ${dark ? "text-gray-50" : "text-gray-800"}`}
           >
-            Sakib welfare
+            Find and Lost Champ
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -159,10 +175,14 @@ const Header = () => {
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <Link to={`/auth/users/profile`} className="justify-between">{user?.name}</Link>
+                  <Link to={`/auth/users/profile`} className="justify-between">
+                    {user?.name}
+                  </Link>
                 </li>
                 <li>
-                  <button onClick={singOut}>Logout</button>
+                  {
+                    menuLinks
+                  }
                 </li>
               </ul>
             </div>
