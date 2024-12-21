@@ -48,7 +48,7 @@ const FAQ = () => {
 
   return (
     <div
-      className={`py-16 px-8 ${
+      className={`py-16 mt-4 rounded-xl px-8 ${
         dark ? "bg-gray-800 text-gray-200" : "bg-gray-50 text-gray-800"
       }`}
     >
@@ -90,7 +90,7 @@ const FAQ = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className={`w-full rounded border ${
+              className={`w-full p-3 rounded border ${
                 dark
                   ? "bg-gray-800 text-gray-300 border-gray-600 focus:ring-orange-500 focus:border-orange-500"
                   : "bg-white border-gray-300 focus:ring-orange-500 focus:border-orange-500"
@@ -108,7 +108,7 @@ const FAQ = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={`w-full rounded border ${
+              className={`w-full p-3 rounded border ${
                 dark
                   ? "bg-gray-800 text-gray-300 border-gray-600 focus:ring-orange-500 focus:border-orange-500"
                   : "bg-white border-gray-300 focus:ring-orange-500 focus:border-orange-500"
@@ -125,7 +125,7 @@ const FAQ = () => {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className={`w-full rounded border ${
+              className={`w-full p-3 rounded border ${
                 dark
                   ? "bg-gray-800 text-gray-300 border-gray-600 focus:ring-orange-500 focus:border-orange-500"
                   : "bg-white border-gray-300 focus:ring-orange-500 focus:border-orange-500"
