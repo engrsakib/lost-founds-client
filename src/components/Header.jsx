@@ -98,7 +98,7 @@ const Header = () => {
         }
         to={`/donation/my-donation`}
       >
-        My Donation
+        Manage My Items
       </NavLink>
       <NavLink
         className={({ isActive }) =>
@@ -146,7 +146,7 @@ const Header = () => {
             to={`/`}
             className={`text-2xl ${dark ? "text-gray-50" : "text-gray-800"}`}
           >
-            Find and Lost Champ
+            Swift Launch
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -177,11 +177,7 @@ const Header = () => {
                     {user?.name}
                   </Link>
                 </li>
-                <li>
-                  {
-                    menuLinks
-                  }
-                </li>
+                <li>{menuLinks}</li>
               </ul>
             </div>
           ) : (
