@@ -8,49 +8,49 @@ const Slider = () => {
           <div className="w-full h-[500px]">
             <img
               className="slder_img"
-              src="https://i.ibb.co.com/0hDcvnF/man-wearing-red-jacket-walking-snowy-field-while-holding-snow-shovel-181624-8845.jpg"
+              src="https://i.ibb.co.com/CKfNX1J/business-woman-is-working-online-traing-reply-customer-home-office-packaging-wall-1150-21874.jpg"
             />
             <p className="legend">Donation Callection</p>
           </div>
           <div className="w-full h-[500px]">
             <img
               className="slder_img"
-              src="https://i.ibb.co.com/k8ZQmhn/1-Getty-Images-1190345481.webp"
+              src="https://i.ibb.co.com/sFSDGj2/portrait-young-woman-holding-paper-craft-bags-standing-high-quality-photo-2831-10278.jpg"
             />
             <p className="legend">Winter Donation</p>
           </div>
           <div className="w-full h-[500px]">
             <img
               className="slder_img"
-              src="https://i.ibb.co.com/302X694/people-taking-community-action-23-2149232535.jpg"
+              src="https://i.ibb.co.com/YddXMPZ/food-crisis-concept-with-jars-arrangement-23-2150314826.jpg"
             />
             <p className="legend">Donation Packaging</p>
           </div>
           <div className="w-full h-[500px]">
             <img
               className="slder_img"
-              src="https://img.freepik.com/free-photo/bag-donation-with-provisions_23-2148613236.jpg?t=st=1733556972~exp=1733560572~hmac=32debb7a3a6d1c2f59929edaade3246799ce3d9c4dc2a1e8adfc7d6a122485d0&w=1380"
+              src="https://i.ibb.co.com/SxcvDtv/5w-KUAWEmh9-KSf63c9ps-Sn-Q.jpg"
             />
             <p className="legend">Donation Packaging</p>
           </div>
           <div className="w-full h-[500px]">
             <img
               className="slder_img"
-              src="https://img.freepik.com/free-photo/volunteer-helping-with-donation-box_23-2149230506.jpg?t=st=1733557019~exp=1733560619~hmac=9ab028a5c898cba70e4a3227fdc8568dc5c7e21a8359aacbe393d0a13914d392&w=1380"
+              src="https://img.freepik.com/free-photo/young-hispanic-woman-preparing-order-working-storehouse-worried-stressed-about-problem-with-hand-forehead-nervous-anxious-crisis_839833-27616.jpg?t=st=1734798713~exp=1734802313~hmac=c1d98f4192b0158b28cf373e77b5ec5f3f8b6610b5517efdeec24cb1e0dd1b10&w=1380"
             />
             <p className="legend">Donation Packaging</p>
           </div>
           <div className="w-full h-[500px]">
             <img
               className="slder_img"
-              src="https://img.freepik.com/free-photo/front-view-box-with-donated-food_23-2148613254.jpg?t=st=1733557048~exp=1733560648~hmac=222c63e87b397c68f3ebd49bcab9d1690aafda18725228d4c7539d7430aa8ef7&w=1060"
+              src="https://img.freepik.com/free-photo/food-donations-collected-charity_23-2149230528.jpg?t=st=1734798737~exp=1734802337~hmac=519705591fe9a5890822569face06544cdf79c3b836d78e683616aadb4781f91&w=1380"
             />
             <p className="legend">Donation Packaging</p>
           </div>
           <div className="w-full h-[500px] aspect-w-16 aspect-h-9">
             <img
               className="slder_img"
-              src="https://img.freepik.com/free-photo/money-calculation-economy_23-2148568054.jpg?t=st=1733557079~exp=1733560679~hmac=725ef9ad6f27a191b7f28d5a1376d14e0dc76294744ca3d1cfba0f64c7626547&w=1380"
+              src="https://img.freepik.com/free-photo/high-angle-delivery-man-prepared-wrap-up-delivery-packages_23-2148447904.jpg?t=st=1734798758~exp=1734802358~hmac=afc8233dc18eec64af9513e463ec7283aa8c65182e4bc12c1c801d68bc77244a&w=1380"
             />
             <p className="legend">Donation delivery</p>
           </div>
