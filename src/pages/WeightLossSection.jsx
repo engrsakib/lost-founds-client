@@ -19,13 +19,13 @@ const WeightLossSection = () => {
             dark ? "text-white" : "text-gray-800"
           }`}
         >
-          Weight loss that works{" "}
+          We work to{" "}
           <span
             className={`italic ${dark ? "text-gray-300" : "text-gray-500"}`}
           >
-            with your body,
+            to help you find your,
           </span>{" "}
-          not against it
+          lost product
         </h1>
         <ul className="space-y-3">
           <li className="flex items-start space-x-2">
