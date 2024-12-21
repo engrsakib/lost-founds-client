@@ -44,7 +44,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/donation/all-campagion",
+        path: "/finds-losts/all-finds",
         element: <AllCamign></AllCamign>,
       },
       {
