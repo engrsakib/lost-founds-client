@@ -4,12 +4,14 @@ import { AuthContext } from "../provider/AuthProvider";
 
 const AllCmapTable = ({ d }) => {
   const {dark, active} = useContext(AuthContext);
-    const { _id, name, deadline, minimumMoney, title, photoURL, moneyNedd, type } = d;
-   
+    const { _id, name, dateLost, type, photoURL, title, lostlocation } = d;
+    
   return (
     <>
       <tr
-        className={`${dark ? "border-gray-500" : "border-gray-200"} border-b place-items-center`}
+        className={`${
+          dark ? "border-gray-500" : "border-gray-200"
+        } border-b place-items-center`}
       >
         <td>
           <div className="flex items-center gap-3">
@@ -26,12 +28,14 @@ const AllCmapTable = ({ d }) => {
             </div>
           </div>
         </td>
-        <td className="text-justify">{moneyNedd}</td>
-        <td className="text-justify">{minimumMoney}</td>
+        <td className="text-justify">{lostlocation}</td>
+        <td className="text-justify">{}</td>
         <td className="text-justify">{type}</td>
         <td></td>
         <div className="max-sm:w-[120px]">
-          <td>{deadline}</td>
+          <td>
+            {dateLost}
+          </td>
         </div>
         <th>
           <Link

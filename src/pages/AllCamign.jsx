@@ -7,6 +7,7 @@ import Loading from "../components/Loading";
 import axios from "axios";
 import { ca } from "date-fns/locale";
 import { useQuery } from "@tanstack/react-query";
+import All from "./All";
 
 const AllCamign = () => {
   const { dark, user } = useContext(AuthContext);
@@ -24,7 +25,7 @@ const AllCamign = () => {
   useEffect(() => {
     setLoadding(true);
     axios
-      .get("http://localhost:5000/donations")
+      .get("http://localhost:5000/lostandfinds")
       .then((data) => {
         setData(data.data); // Update state with fetched data
         setLoadding(false); // End loadding
@@ -101,29 +102,10 @@ const AllCamign = () => {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Title and photo</th>
-              <th>Needed Amount</th>
-              <th>Min Donate Amount</th>
-              <th>Types</th>
-              <th></th>
-              <th>Deadline</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-
-          {data?.map((d) => (
-            <AllCmapTable key={d._id} d={d}></AllCmapTable>
-          ))}
-        </table>
-      </div>
+      <All data={data} card={card}></All>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>All Campagion</title>
+        <title>All Lost & Found Item</title>
       </Helmet>
     </div>
   );

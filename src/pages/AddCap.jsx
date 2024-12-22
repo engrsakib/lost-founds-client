@@ -15,12 +15,13 @@ const AddCap = () => {
     type: "",
     description: "",
     categoryArray: [],
-    picuplocation: "",
-    deadline: new Date(),
+    lostlocation: "", // String or number depending on the input format
+    dateLost: new Date(),
   });
   const [imageUploading, setImageUploading] = useState(false);
   const [categoryInput, setCategoryInput] = useState(""); // For category input field
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+  const [photoUrlInput, setPhotoUrlInput] = useState(""); // To handle photo URL input
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +29,7 @@ const AddCap = () => {
   };
 
   const handleDateChange = (date) => {
-    setFormData({ ...formData, deadline: date });
+    setFormData({ ...formData, dateLost: date });
   };
 
   const handleCategoryChange = (e) => {
@@ -118,13 +119,24 @@ const AddCap = () => {
     }
   };
 
+  const handlePhotoUrlChange = (e) => {
+    setPhotoUrlInput(e.target.value);
+  };
+
+  const handleSetPhotoUrl = () => {
+    setFormData({ ...formData, photoURL: photoUrlInput });
+    setPhotoUrlInput(""); // Clear input after setting the URL
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Ensure lostlocation is either a number or a valid string
+    const location = formData.lostlocation;
     const payload = {
       ...formData,
       category: formData.categoryArray, // Send category as an array
-      picuplocation: parseFloat(formData.picuplocation),
+      lostlocation: location,
     };
 
     Swal.fire({
@@ -134,7 +146,7 @@ const AddCap = () => {
       denyButtonText: "Don't save",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const response = await fetch("http://localhost:5000/donations", {
+        const response = await fetch("http://localhost:5000/lostandfinds", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -150,8 +162,8 @@ const AddCap = () => {
             type: "",
             description: "",
             categoryArray: [],
-            picuplocation: "",
-            deadline: new Date(),
+            lostlocation: "",
+            dateLost: new Date(),
           });
           setCategoryInput(""); // Clear category input
         } else {
@@ -287,11 +299,11 @@ const AddCap = () => {
         </div>
 
         <div>
-          <label className="label">Pickup Location</label>
+          <label className="label">Lost Location</label>
           <input
             type="text"
-            name="picuplocation"
-            value={formData.picuplocation}
+            name="lostlocation"
+            value={formData.lostlocation}
             onChange={handleChange}
             placeholder="Enter the pickup location"
             className="input input-bordered w-full"
@@ -300,13 +312,14 @@ const AddCap = () => {
         </div>
 
         <div>
-          <label className="label">Deadline</label>
+          <label className="label">Date Lost</label>
           <DatePicker
-            selected={formData.deadline}
+            selected={formData.dateLost}
             onChange={handleDateChange}
             dateFormat="yyyy-MM-dd"
             className="input input-bordered w-full"
             required
+            maxDate={new Date()} // Disable future dates
           />
         </div>
 
@@ -355,7 +368,7 @@ const AddCap = () => {
                 className="btn btn-outline btn-error"
                 onClick={() => setIsModalOpen(false)}
               >
-                open/close
+                Open/Close
               </button>
             </div>
           </div>
