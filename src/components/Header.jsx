@@ -100,18 +100,17 @@ const Header = () => {
       >
         Manage My Items
       </NavLink>
-      <NavLink
+
+      <button
         className={({ isActive }) =>
           `px-4 py-2 rounded ${
             isActive ? " text-white" : "bg-transparent hover:bg-red-400"
           } ${dark ? "text-gray-50" : "text-gray-800"}`
         }
-        to={`/donation/my-donation`}
+        onClick={singOut}
       >
-        <li>
-          <button onClick={singOut}>Logout</button>
-        </li>
-      </NavLink>
+        Logout
+      </button>
     </>
   );
   return (
