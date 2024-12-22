@@ -39,7 +39,7 @@ const WeightLossSection = () => {
             <p
               className={`${dark ? "text-gray-300" : "text-gray-600"} text-lg`}
             >
-              Effective medications
+              Finding lost products
             </p>
           </li>
           <li className="flex items-start space-x-2">
@@ -53,7 +53,7 @@ const WeightLossSection = () => {
             <p
               className={`${dark ? "text-gray-300" : "text-gray-600"} text-lg`}
             >
-              Expert, virtual clinical care
+              Expert advice on lost products
             </p>
           </li>
           <li className="flex items-start space-x-2">
