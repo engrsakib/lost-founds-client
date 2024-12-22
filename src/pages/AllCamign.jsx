@@ -20,7 +20,7 @@ const AllCamign = () => {
 
   const [loadding, setLoadding] = useState(true);
 
-  
+
   useEffect(() => {
     setLoadding(true);
     axios
@@ -54,16 +54,29 @@ const AllCamign = () => {
   // console.log(data);
   return (
     <div>
-      <div className="text-center flex justify-between">
+      <div className="text-center flex justify-between max-sm:flex-col items-center gap-2">
         <h2 className="text-4xl font-bold text-orange-500 justify-center">
-          All Campagion {data?.length}
+          Lost & Found Items {data?.length}
         </h2>
-        <div className="space-x-6">
-          <button onClick={handleSort} className="btn btn-warning justify-end">
-            Sort
-          </button>
+        <div className="space-x-6 flex gap-3 justify-center items-center max-sm:flex-col">
+          {/* search start */}
+          <div className="join">
+            <input
+              className="input input-bordered join-item"
+              placeholder="serach your items"
+            />
+            <button className="btn join-item rounded-r-full">Search</button>
+          </div>
+          {/* search end */}
 
           <div className="join">
+            <button
+              onClick={handleSort}
+              className="join-item btn btn-warning justify-end"
+            >
+              Sort
+            </button>
+
             <button
               onClick={() => {
                 isCard(true);

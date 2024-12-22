@@ -10,6 +10,9 @@ const MyCamo = () => {
   const [donation, setDonations] = useState(null);
   const [loadding, setLoadding] = useState(true);
 
+  const [card, isCard] = useState(true);
+  console.log(card);
+
   useEffect(() => {
     if (user?.mail) {
       setLoadding(true);
@@ -32,10 +35,35 @@ const MyCamo = () => {
 
   return (
     <div>
-      <div className="text-center">
+      <div className="text-center flex justify-between max-sm:flex-col items-center gap-2">
         <h2 className="text-4xl font-bold text-orange-500">
-          My Campagion {donation.length}
+          All Recovered Items {donation.length}
         </h2>
+
+        <div className="space-x-6 flex gap-3 justify-center items-center max-sm:flex-col">
+          <div className="join">
+            <button
+              onClick={() => {
+                isCard(true);
+              }}
+              className={`join-item btn ${card ? "btn-primary" : ""}`}
+              aria-label="Radio 3"
+              disabled={card}
+            >
+              Card Layout
+            </button>
+            <button
+              onClick={() => {
+                isCard(false);
+              }}
+              className={`join-item btn ${card ? "" : "btn-primary"}`}
+              disabled={!card}
+              aria-label="Radio 3"
+            >
+              Table Layout
+            </button>
+          </div>
+        </div>
       </div>
       <div className="overflow-x-auto">
         <table className="table">

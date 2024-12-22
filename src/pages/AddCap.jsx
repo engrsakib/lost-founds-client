@@ -2,45 +2,137 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 const AddCap = () => {
   const { user } = useContext(AuthContext);
   const [formData, setFormData] = useState({
-    name: user.name, // Static data for demonstration
+    name: user.name,
     mail: user.mail,
     title: "",
     photoURL: "",
     type: "",
     description: "",
-    moneyNedd: "",
-    minimumMoney: "",
-    deadline: "",
+    categoryArray: [],
+    picuplocation: "",
+    deadline: new Date(),
   });
+  const [imageUploading, setImageUploading] = useState(false);
+  const [categoryInput, setCategoryInput] = useState(""); // For category input field
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
 
-  // Handle form field updates
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission
+  const handleDateChange = (date) => {
+    setFormData({ ...formData, deadline: date });
+  };
+
+  const handleCategoryChange = (e) => {
+    const value = e.target.value;
+    setCategoryInput(value);
+    if (value.includes(",")) {
+      const categories = value
+        .split(",")
+        .map((cat) => cat.trim())
+        .filter((cat) => cat !== "");
+      setFormData({
+        ...formData,
+        categoryArray: [...formData.categoryArray, ...categories],
+      });
+      setCategoryInput(""); // Clear the input after adding categories
+    }
+  };
+
+  const removeCategory = (index) => {
+    const updatedCategories = formData.categoryArray.filter(
+      (_, idx) => idx !== index
+    );
+    setFormData({ ...formData, categoryArray: updatedCategories });
+  };
+
+  const handleImageUpload = async (file) => {
+    if (!file) return;
+
+    // Restrict file types to png, jpeg, and jpg
+    const allowedFileTypes = /\.(png|jpe?g)$/i;
+    if (!allowedFileTypes.test(file.name)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid File Type",
+        text: "Only PNG, JPEG, and JPG files are allowed.",
+      });
+      return;
+    }
+
+    if (file.size > 1024 * 1024) {
+      Swal.fire({
+        icon: "error",
+        title: "File too large",
+        text: "Please upload an image less than 1MB.",
+      });
+      return;
+    }
+
+    const imageData = new FormData();
+    imageData.append("image", file);
+
+    setImageUploading(true);
+    try {
+      const response = await fetch(
+        `https://api.imgbb.com/1/upload?key=ff3d9127cce3eed275891ef32d478736`, // Replace with your API key
+        {
+          method: "POST",
+          body: imageData,
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        setFormData({ ...formData, photoURL: result.data.display_url });
+        Swal.fire({
+          icon: "success",
+          title: "Image Uploaded",
+          text: "Image uploaded successfully!",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Upload Failed",
+          text: "There was an issue uploading the image. Please try again.",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Upload Failed",
+        text: "Something went wrong. Please try again.",
+      });
+    } finally {
+      setImageUploading(false);
+      setIsModalOpen(false); // Close modal
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Parse minimumMoney and moneyNedd to numbers
     const payload = {
       ...formData,
-      minimumMoney: parseFloat(formData.minimumMoney),
-      moneyNedd: parseFloat(formData.moneyNedd),
+      category: formData.categoryArray, // Send category as an array
+      picuplocation: parseFloat(formData.picuplocation),
     };
 
     Swal.fire({
       title: "Do you want to save?",
       showDenyButton: true,
-      showCancelButton: false,
       confirmButtonText: "Save",
-      denyButtonText: `Don't save`,
+      denyButtonText: "Don't save",
     }).then(async (result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         const response = await fetch("http://localhost:5000/donations", {
           method: "POST",
@@ -49,9 +141,7 @@ const AddCap = () => {
         });
 
         if (response.ok) {
-          const result = await response.json();
           Swal.fire("Saved!", "", "success");
-          console.log("Server Response:", result);
           setFormData({
             name: user.name,
             mail: user.mail,
@@ -59,10 +149,11 @@ const AddCap = () => {
             photoURL: "",
             type: "",
             description: "",
-            moneyNedd: "",
-            minimumMoney: "",
-            deadline: "",
+            categoryArray: [],
+            picuplocation: "",
+            deadline: new Date(),
           });
+          setCategoryInput(""); // Clear category input
         } else {
           Swal.fire({
             icon: "error",
@@ -71,7 +162,7 @@ const AddCap = () => {
           });
         }
       } else if (result.isDenied) {
-        Swal.fire("Data are not saved", "", "info");
+        Swal.fire("Data not saved", "", "info");
       }
     });
   };
@@ -79,10 +170,11 @@ const AddCap = () => {
   return (
     <div className="max-w-3xl mx-auto p-6 bg-base-200 rounded-lg shadow-lg">
       <div className="text-center">
-        <h2 className="text-4xl font-bold text-orange-500">Add Campagion</h2>
+        <h2 className="text-4xl font-bold text-orange-500">
+          Add Lost & Found Item
+        </h2>
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Name */}
         <div>
           <label className="label">Name</label>
           <input
@@ -94,7 +186,6 @@ const AddCap = () => {
           />
         </div>
 
-        {/* Email */}
         <div>
           <label className="label">Email</label>
           <input
@@ -106,7 +197,6 @@ const AddCap = () => {
           />
         </div>
 
-        {/* Title */}
         <div>
           <label className="label">Title</label>
           <input
@@ -120,21 +210,25 @@ const AddCap = () => {
           />
         </div>
 
-        {/* Photo URL */}
         <div>
-          <label className="label">Photo URL</label>
-          <input
-            type="text"
-            name="photoURL"
-            value={formData.photoURL}
-            onChange={handleChange}
-            placeholder="Enter photo URL"
-            className="input input-bordered w-full"
-            required
-          />
+          <label className="label">Photo</label>
+          <button
+            type="button"
+            className="btn btn-outline btn-primary w-full"
+            onClick={() => setIsModalOpen(true)}
+          >
+            Choose Photo
+          </button>
+          {formData.photoURL && (
+            <img
+              src={formData.photoURL}
+              alt="Uploaded"
+              className="mt-2 rounded-md"
+              style={{ maxWidth: "100px", maxHeight: "100px" }}
+            />
+          )}
         </div>
 
-        {/* Type */}
         <div>
           <label className="label">Type</label>
           <select
@@ -147,14 +241,11 @@ const AddCap = () => {
             <option disabled value="">
               Select a type
             </option>
-            <option value="personal">Personal</option>
-            <option value="business">Business</option>
-            <option value="startup">Startup</option>
-            <option value="creative">Creative</option>
+            <option value="lost">Lost</option>
+            <option value="found">Found</option>
           </select>
         </div>
 
-        {/* Description */}
         <div>
           <label className="label">Description</label>
           <textarea
@@ -167,64 +258,109 @@ const AddCap = () => {
           />
         </div>
 
-        {/* Money Needed */}
         <div>
-          <label className="label">Money Neaded</label>
+          <label className="label">Category</label>
           <input
-            type="number"
-            name="moneyNedd"
-            value={formData.moneyNedd}
+            type="text"
+            value={categoryInput}
+            onChange={handleCategoryChange}
+            placeholder="Type and press comma"
+            className="input input-bordered w-full"
+          />
+          <div className="mt-2 flex flex-wrap gap-2">
+            {formData.categoryArray.map((cat, index) => (
+              <div
+                key={index}
+                className="badge badge-primary flex items-center gap-2"
+              >
+                {cat}
+                <button
+                  type="button"
+                  className="btn btn-xs btn-circle btn-error"
+                  onClick={() => removeCategory(index)}
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label className="label">Pickup Location</label>
+          <input
+            type="text"
+            name="picuplocation"
+            value={formData.picuplocation}
             onChange={handleChange}
-            placeholder="Enter the money required"
+            placeholder="Enter the pickup location"
             className="input input-bordered w-full"
             required
           />
         </div>
 
-        {/* Minimum Money */}
-        <div>
-          <label className="label">Minimum Money</label>
-          <input
-            type="number"
-            name="minimumMoney"
-            value={formData.minimumMoney}
-            onChange={handleChange}
-            placeholder="Enter the minimum money required"
-            className="input input-bordered w-full"
-            required
-          />
-        </div>
-
-        {/* Deadline */}
         <div>
           <label className="label">Deadline</label>
-          <input
-            type="date"
-            name="deadline"
-            value={formData.deadline}
-            onChange={handleChange}
-            min={new Date().toISOString().split("T")[0]} // Current date as the minimum
-            max={
-              new Date(new Date().setDate(new Date().getDate() + 240))
-                .toISOString()
-                .split("T")[0]
-            } // Current date + 240 days as the maximum
+          <DatePicker
+            selected={formData.deadline}
+            onChange={handleDateChange}
+            dateFormat="yyyy-MM-dd"
             className="input input-bordered w-full"
             required
           />
         </div>
 
-        {/* Submit Button */}
         <div className="text-center">
           <button type="submit" className="btn btn-primary w-full">
             Submit
           </button>
         </div>
       </form>
+
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Add Campagion</title>
+        <title>Add Lost & Found Item</title>
       </Helmet>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Choose Image</h3>
+            <div className="mt-4 space-y-4">
+              <div>
+                <label className="label">Upload File</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageUpload(e.target.files[0])}
+                  className="file-input file-input-bordered w-full"
+                />
+              </div>
+              <div>
+                <label className="label">Photo URL</label>
+                <input
+                  type="text"
+                  value={formData.photoURL}
+                  onChange={(e) =>
+                    setFormData({ ...formData, photoURL: e.target.value })
+                  }
+                  placeholder="Paste photo URL"
+                  className="input input-bordered w-full"
+                />
+              </div>
+            </div>
+            <div className="modal-action">
+              <button
+                className="btn btn-outline btn-error"
+                onClick={() => setIsModalOpen(false)}
+              >
+                open/close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
