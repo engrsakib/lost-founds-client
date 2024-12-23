@@ -2,11 +2,10 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 
-const AllCmapTable = ({ d }) => {
-  const {dark, active} = useContext(AuthContext);
-    const { _id, name, dateLost, type, photoURL, title, lostlocation } = d;
-    
-    
+const AllCmapTableR = ({ d }) => {
+  const { dark, active } = useContext(AuthContext);
+  const { _id, name, dateLost, type, photoURL, title, lostlocation } = d;
+    console.log(d)
   return (
     <>
       <tr
@@ -38,7 +37,7 @@ const AllCmapTable = ({ d }) => {
         </div>
         <th>
           <Link
-            to={`/lost-finds/all/details/${_id}`}
+            to={`/recover/all/details/${_id}`}
             className="btn btn-ghost btn-xs"
           >
             details
@@ -49,4 +48,4 @@ const AllCmapTable = ({ d }) => {
   );
 };
 
-export default AllCmapTable;
+export default AllCmapTableR;

@@ -4,10 +4,15 @@ import MyFund from "./MyFund";
 import { Helmet } from "react-helmet";
 import Loading from "../components/Loading";
 import axios from "axios";
+import { IoGrid } from "react-icons/io5";
+import { FaList } from "react-icons/fa";
+import All from "./All";
+import AllR from "./AllR";
 
 const MyDonation = () => {
   const { user, dark } = useContext(AuthContext);
-  const [donation, setDonations] = useState(null);
+  const [card, isCard] = useState(true);
+  const [data, setdata] = useState(null);
   const [loadding, setLoadding] = useState(true);
 
   useEffect(() => {
@@ -24,11 +29,11 @@ const MyDonation = () => {
       //     setLoadding(false);
       //   });
       axios
-        .get(`http://localhost:5000/myMoney/${user.mail}`, {
+        .get(`http://localhost:5000/myrecover/items/${user.mail}`, {
           withCredentials: true,
         })
         .then((data) => {
-          setDonations(data.data);
+          setdata(data.data);
           setLoadding(false);
         })
         .catch((err) => {
@@ -42,24 +47,63 @@ const MyDonation = () => {
   if (loadding) {
     return <Loading></Loading>;
   }
-  return (
-    <div>
-      <div className="text-center">
-        <h2 className="text-4xl font-bold text-orange-500">
-          My Donations {donation.length}
-        </h2>
+  
+  if(data?.length !== 0){
+    return (
+      <div>
+        <div className="text-left">
+          <h2 className="text-4xl font-bold text-orange-500">
+            My Recover {data?.length}
+          </h2>
+        </div>
+        <div className="join">
+          <button
+            onClick={() => {
+              isCard(true);
+            }}
+            className={`join-item btn btn-warning ${card ? "btn-primary" : ""}`}
+            aria-label="Radio 3"
+            disabled={card}
+          >
+            <IoGrid />
+          </button>
+          <button
+            onClick={() => {
+              isCard(false);
+            }}
+            className={`join-item btn btn-warning ${card ? "" : "btn-primary"}`}
+            disabled={!card}
+            aria-label="Radio 3"
+          >
+            <FaList />
+          </button>
+        </div>
+        <AllR data={data} card={card}></AllR>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>My Recover</title>
+        </Helmet>
       </div>
-      <section className="grid mt-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {donation.map((fund) => (
-          <MyFund key={fund._id} fund={fund}></MyFund>
-        ))}
-      </section>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>My Donations</title>
-      </Helmet>
-    </div>
-  );
+    );
+  }else{
+    return (
+      <div>
+        <div className="text-center">
+          <h2 className="text-4xl font-bold text-orange-500">My Recover</h2>
+          <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <img
+              src="https://i.ibb.co.com/ZX9b5F5/no-data-concept-illustration-114360-25063.jpg"
+              alt=""
+            />
+          </p>
+        </div>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>My Recover</title>
+        </Helmet>
+      </div>
+    );
+  }
 };
 
 export default MyDonation;

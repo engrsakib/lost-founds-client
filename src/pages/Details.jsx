@@ -27,6 +27,7 @@ const Details = () => {
     lostlocation,
   } = data[0];
 
+  
   // States for modal
   const [isModalOpen, setModalOpen] = useState(false);
   const [recoveredLocation, setRecoveredLocation] = useState("");
@@ -40,7 +41,7 @@ const Details = () => {
     });
   }, [_id, setRecoveredData]);
 
-  console.log(recoverData);
+  
 
   const checkUser = () => {
     if (recoverData?.itemId == _id) {
@@ -69,8 +70,14 @@ const Details = () => {
       name: user.name,
       email: user.mail,
       image: user.photoURL,
+      type: type,
       location: recoveredLocation,
       dateRecovered: recoveredDate,
+      title: title,
+      photoURL: photoURL,
+      dateLost: dateLost,
+      lostlocation: lostlocation,
+      description: description,
     };
 
     try {
@@ -203,6 +210,7 @@ const Details = () => {
               <DatePicker
                 selected={recoveredDate}
                 onChange={(date) => setRecoveredDate(date)}
+                minDate={new Date()}
                 className="input input-bordered w-full"
                 popperPlacement="bottom-start"
                 popperModifiers={[

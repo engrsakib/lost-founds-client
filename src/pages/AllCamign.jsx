@@ -8,12 +8,14 @@ import axios from "axios";
 import { ca } from "date-fns/locale";
 import { useQuery } from "@tanstack/react-query";
 import All from "./All";
+import { IoGrid } from "react-icons/io5";
+import { FaList } from "react-icons/fa";
 
 const AllCamign = () => {
   const { dark, user } = useContext(AuthContext);
 
   const [card, isCard] = useState(true);
-  console.log(card);
+  
   const [data, setData] = useState(null);
   setTimeout(() => {
     setData(d);
@@ -66,7 +68,7 @@ const AllCamign = () => {
               className="input input-bordered join-item"
               placeholder="serach your items"
             />
-            <button className="btn join-item rounded-r-full">Search</button>
+            <button className="btn btn-warning join-item rounded-r-full">Search</button>
           </div>
           {/* search end */}
 
@@ -82,21 +84,21 @@ const AllCamign = () => {
               onClick={() => {
                 isCard(true);
               }}
-              className={`join-item btn ${card ? "btn-primary" : ""}`}
+              className={`join-item btn btn-warning ${card ? "btn-primary" : ""}`}
               aria-label="Radio 3"
               disabled={card}
             >
-              Card Layout
+              <IoGrid />
             </button>
             <button
               onClick={() => {
                 isCard(false);
               }}
-              className={`join-item btn ${card ? "" : "btn-primary"}`}
+              className={`join-item btn btn-warning ${card ? "" : "btn-primary"}`}
               disabled={!card}
               aria-label="Radio 3"
             >
-              Table Layout
+              <FaList />
             </button>
           </div>
         </div>

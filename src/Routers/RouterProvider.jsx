@@ -68,6 +68,16 @@ const router = createBrowserRouter([
           fetch(`http://localhost:5000/lost-finds/${params.id}`),
       },
       {
+        path: "/recover/all/details/:id",
+        element: (
+          <Privete>
+            <Details></Details>
+          </Privete>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/lost-finds/${params.id}`),
+      },
+      {
         path: "/donation/all-campagion/details/donated/:id",
         element: (
           <Privete>
