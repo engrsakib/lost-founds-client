@@ -8,17 +8,7 @@ import Swal from "sweetalert2";
 const MyCampCard = ({ d, setDonations }) => {
   const { dark } = useContext(AuthContext);
   const navigate = useNavigate();
-  const {
-    _id,
-    name,
-    mail,
-    title,
-    photoURL,
-    type,
-    description,
-    moneyNedd,
-    deadline,
-  } = d;
+  const { _id, name, dateLost, type, photoURL, title, lostlocation } = d;
 
   const handleDelete = (id) => {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -106,15 +96,18 @@ const MyCampCard = ({ d, setDonations }) => {
             </div>
           </div>
         </td>
-        <td className="text-justify">{moneyNedd}</td>
-        <td className="text-justify">{type}</td>
-        <td></td>
+        <td className="text-justify">{lostlocation}</td>
+        <td className="text-justify"></td>
+        <td>{type}</td>
         <div className="max-sm:w-[120px]">
-          <td>{deadline}</td>
+          <div className="max-sm:w-[120px]">
+            <td>{new Date(dateLost).toLocaleDateString("en-GB")}</td>
+          </div>
+          <td></td>
         </div>
         <th>
           <Link
-            to={`/donation/all-campagion/details/${_id}`}
+            to={`/lost-finds/all/details/${_id}`}
             className="btn btn-ghost btn-xs"
           >
             details

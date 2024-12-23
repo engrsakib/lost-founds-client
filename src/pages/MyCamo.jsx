@@ -70,10 +70,11 @@ const MyCamo = () => {
           <thead>
             <tr>
               <th>Title and photo</th>
-              <th>Needed</th>
-              <th>Types</th>
+              <th>Lost Location</th>
               <th></th>
-              <th>Deadline</th>
+              <th>Types</th>
+              <th>Date Lost</th>
+              <th></th>
               <th></th>
               <th></th>
             </tr>
