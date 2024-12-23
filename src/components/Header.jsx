@@ -84,9 +84,9 @@ const Header = () => {
               : "bg-transparent hover:bg-red-400"
           } ${dark ? "text-gray-50" : "text-gray-800"}`
         }
-        to={`/donation/my-campagion`}
+        to={`/finds-losts/my-Iteam`}
       >
-        All Recovered Items
+        Manage My Items
       </NavLink>
       <NavLink
         className={({ isActive }) =>
@@ -98,19 +98,10 @@ const Header = () => {
         }
         to={`/donation/my-donation`}
       >
-        Manage My Items
+        All Recovered Items
       </NavLink>
 
-      <button
-        className={({ isActive }) =>
-          `px-4 py-2 rounded ${
-            isActive ? " text-white" : "bg-transparent hover:bg-red-400"
-          } ${dark ? "text-gray-50" : "text-gray-800"}`
-        }
-        onClick={singOut}
-      >
-        Logout
-      </button>
+      <button onClick={singOut}>Logout</button>
     </>
   );
   return (

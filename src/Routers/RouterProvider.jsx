@@ -55,7 +55,7 @@ const router = createBrowserRouter([
           </Privete>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/donationsUpadte/${params.id}`),
+          fetch(`http://localhost:5000/itemsUpadte/${params.id}`),
       },
       {
         path: "/donation/all-campagion/details/:id",
@@ -94,7 +94,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/donation/my-campagion",
+        path: "/finds-losts/my-Iteam",
         element: (
           <Privete>
             <MyCamo></MyCamo>

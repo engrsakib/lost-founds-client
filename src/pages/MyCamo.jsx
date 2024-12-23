@@ -16,7 +16,7 @@ const MyCamo = () => {
   useEffect(() => {
     if (user?.mail) {
       setLoadding(true);
-      fetch(`http://localhost:5000/myDonations/${user.mail}`)
+      fetch(`http://localhost:5000/myitems/${user.mail}`)
         .then((res) => res.json())
         .then((data) => {
           setDonations(data); // Update state with fetched data
@@ -37,7 +37,7 @@ const MyCamo = () => {
     <div>
       <div className="text-center flex justify-between max-sm:flex-col items-center gap-2">
         <h2 className="text-4xl font-bold text-orange-500">
-          All Recovered Items {donation.length}
+          My Items {donation.length}
         </h2>
 
         <div className="space-x-6 flex gap-3 justify-center items-center max-sm:flex-col">
@@ -89,7 +89,7 @@ const MyCamo = () => {
       </div>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>My Campagion</title>
+        <title>My Items</title>
       </Helmet>
     </div>
   );

@@ -41,7 +41,7 @@ const MyCampCard = ({ d, setDonations }) => {
       .then((result) => {
         if (result.isConfirmed) {
           // delete data
-          fetch(`http://localhost:5000/myDonations/${id}`, {
+          fetch(`http://localhost:5000/myitems/${id}`, {
             method: "DELETE",
           })
             .then((res) => res.json())

@@ -1,24 +1,29 @@
 import React, { useContext, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
+import DatePicker from "react-datepicker";
 
 const Update = () => {
   const updateData = useLoaderData();
+  const [categoryInput, setCategoryInput] = useState("");
+  const navigate = useNavigate();
   // console.log(updateData)
   const {
     _id,
     name,
     mail,
-    deadline,
-    moneyNedd,
-    minimumMoney,
+    categoryArray,
+    dateLost,
+    lostlocation,
     title,
     photoURL,
     type,
     description,
   } = updateData;
+
+  console.log(updateData)
   const { user } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: user.name, // Static data for demonstration
@@ -27,10 +32,11 @@ const Update = () => {
     photoURL: photoURL,
     type: type,
     description: description,
-    moneyNedd: moneyNedd,
-    minimumMoney: minimumMoney,
-    deadline: deadline,
+    categoryArray: categoryArray,
+    dateLost: dateLost,
+    lostlocation: lostlocation,
   });
+
 
   // Handle form field updates
   const handleChange = (e) => {
@@ -38,6 +44,35 @@ const Update = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+
+  // handle date change
+  const handleDateChange = (date) => {
+    setFormData({ ...formData, dateLost: date });
+  };
+
+  // Handle category input
+   const handleCategoryChange = (e) => {
+     const value = e.target.value;
+     setCategoryInput(value);
+     if (value.includes(",")) {
+       const categories = value
+         .split(",")
+         .map((cat) => cat.trim())
+         .filter((cat) => cat !== "");
+       setFormData({
+         ...formData,
+         categoryArray: [...formData.categoryArray, ...categories],
+       });
+       setCategoryInput("");
+     }
+   };
+
+   const removeCategory = (index) => {
+     const updatedCategories = formData.categoryArray.filter(
+       (_, idx) => idx !== index
+     );
+     setFormData({ ...formData, categoryArray: updatedCategories });
+   };
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,7 +87,7 @@ const Update = () => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         const response = await fetch(
-          `http://localhost:5000/donationsUpadte/${_id}`,
+          `http://localhost:5000/itemsUpadte/${_id}`,
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -71,10 +106,12 @@ const Update = () => {
             photoURL: "",
             type: "",
             description: "",
-            moneyNedd: "",
-            minimumMoney: "",
-            deadline: "",
+            categoryArray: "",
+            dateLost: "",
+            lostlocation: "",
           });
+          setCategoryInput("");
+          navigate(`/finds-losts/my-Iteam`);
         } else {
           Swal.fire({
             icon: "error",
@@ -160,10 +197,8 @@ const Update = () => {
               <option disabled value="">
                 Select a type
               </option>
-              <option value="personal">Personal</option>
-              <option value="business">Business</option>
-              <option value="startup">Startup</option>
-              <option value="creative">Creative</option>
+              <option value="lost">Lost</option>
+              <option value="found">Found</option>
             </select>
           </div>
 
@@ -180,29 +215,44 @@ const Update = () => {
             />
           </div>
 
-          {/* Money Neaded */}
+          {/* category */}
           <div>
-            <label className="label">Money Neaded</label>
+            <label className="label">Category</label>
             <input
-              type="number"
-              name="moneyNedd"
-              value={formData.moneyNedd}
-              onChange={handleChange}
-              placeholder="Enter the minimum money required"
+              type="text"
+              value={categoryInput}
+              onChange={handleCategoryChange}
+              placeholder="Type and press comma"
               className="input input-bordered w-full"
-              required
             />
+            <div className="mt-2 flex flex-wrap gap-2">
+              {formData.categoryArray.map((cat, index) => (
+                <div
+                  key={index}
+                  className="badge badge-primary flex items-center gap-2"
+                >
+                  {cat}
+                  <button
+                    type="button"
+                    className="btn btn-xs btn-circle btn-error"
+                    onClick={() => removeCategory(index)}
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Minimum Money */}
+          {/* Lost location */}
           <div>
-            <label className="label">Minimum Money</label>
+            <label className="label">Lost Location</label>
             <input
-              type="number"
-              name="minimumMoney"
-              value={formData.minimumMoney}
+              type="text"
+              name="lostlocation"
+              value={formData.lostlocation}
               onChange={handleChange}
-              placeholder="Enter the minimum money required"
+              placeholder="Enter the pickup location"
               className="input input-bordered w-full"
               required
             />
@@ -210,22 +260,16 @@ const Update = () => {
 
           {/* Deadline */}
           <div>
-            <label className="label">Deadline</label>
-            <input
-              type="date"
-              name="deadline"
-              value={formData.deadline}
-              onChange={handleChange}
-              min={new Date().toISOString().split("T")[0]}
-              max={
-                new Date(new Date().setDate(new Date().getDate() + 240))
-                  .toISOString()
-                  .split("T")[0]
-              } // Current date + 240 days as the maximum
-              className="input input-bordered w-full"
-              required
-            />
-          </div>
+                    <label className="label">Date Lost</label>
+                    <DatePicker
+                      selected={formData.dateLost}
+                      onChange={handleDateChange}
+                      dateFormat="yyyy-MM-dd"
+                      className="input input-bordered w-full"
+                      required
+                      maxDate={new Date()} // Disable future dates
+                    />
+                  </div>
 
           {/* Submit Button */}
           <div className="text-center">
@@ -237,7 +281,7 @@ const Update = () => {
       </div>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Update Campagion</title>
+        <title>Update Items</title>
       </Helmet>
     </>
   );
