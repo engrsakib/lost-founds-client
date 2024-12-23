@@ -3,6 +3,7 @@ import MyCampCard from "./MyCampCard";
 import { AuthContext } from "../provider/AuthProvider";
 import MyFund from "../pages/MyFund";
 import ActiveCard from "./ActiveCard";
+import { Link } from "react-router-dom";
 
 const ActiveDon = () => {
   const { user } = useContext(AuthContext);
@@ -45,6 +46,14 @@ const ActiveDon = () => {
           <ActiveCard key={fund._id} fund={fund}></ActiveCard>
         ))}
       </section>
+      <div className="flex justify-end mt-4">
+        <Link
+          to={`finds-losts/all-finds`}
+          className="btn btn-secondary justify-end"
+        >
+          see all
+        </Link>
+      </div>
     </div>
   );
 };

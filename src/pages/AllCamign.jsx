@@ -37,7 +37,7 @@ const AllCamign = () => {
   }, []);
 
   const handleSort = () => {
-    fetch(`http://localhost:5000/donations/sorted`)
+    fetch(`http://localhost:5000/lostandfinds/sorted`)
       .then((res) => res.json())
       .then((data) => {
         setData(data); // Update state with fetched data

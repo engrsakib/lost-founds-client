@@ -1,20 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
-import { useQuery } from "@tanstack/react-query";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Details = () => {
-  const { dark, setActive, active } = useContext(AuthContext);
+  const { dark } = useContext(AuthContext);
   const data = useLoaderData();
   const navigate = useNavigate();
-  const {user} = useContext(AuthContext);
-  console.log(data[0])
-  
-  const {p} = useParams();
-  console.log(p)
-    
+  const { user } = useContext(AuthContext);
 
   const {
     _id,
@@ -28,58 +24,80 @@ const Details = () => {
     dateLost,
     lostlocation,
   } = data[0];
-  console.log(data[0]);
 
- 
+  // States for modal
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [recoveredLocation, setRecoveredLocation] = useState("");
+  const [recoveredDate, setRecoveredDate] = useState(new Date());
 
-  // donetation section handel
-  const handleDonate = (id)=>{
-    if(active){
-       
-      if (name === user.name) {
-        Swal.fire({
-          icon: "error",
-          title: "Donation Faild",
-          text: `You can't donated in your own campagion`,
-        });
-        return;
-      }
-      navigate(`/donation/all-campagion/details/donated/${id}`);
-
-        
-
-    }else{
+  const checkUser = () => {
+    if (mail === user.mail) {
       Swal.fire({
         icon: "error",
-        title: "Oops...",
-        text: "Donations date!",
+        title: "Recovery Failed",
+        text: `You can't recover your own item!`,
       });
+      return;
     }
-  }
+    setModalOpen(true);
+  };
+
+  const handleSubmit = async () => {
+    const recoveryData = {
+      itemId: _id,
+      name: user.name,
+      email: user.mail,
+      image: user.photoURL,
+      location: recoveredLocation,
+      dateRecovered: recoveredDate,
+    };
+
+    try {
+      const recoveryResponse = await fetch("/api/recovered-items", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(recoveryData),
+      });
+
+      const statusResponse = await fetch(`/api/items/${_id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "recovered" }),
+      });
+
+      if (recoveryResponse.ok && statusResponse.ok) {
+        Swal.fire("Success!", "Item marked as recovered!", "success");
+        setModalOpen(false); // Close the modal
+      } else {
+        Swal.fire("Error", "Failed to mark item as recovered", "error");
+      }
+    } catch (error) {
+      Swal.fire("Error", error.message, "error");
+    }
+  };
+
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Details</title>
+      </Helmet>
+
       <div className="flex flex-col lg:flex-row gap-8 px-6 lg:px-16 py-8">
         {/* Left Section */}
         <div className="flex-1">
           <img
             src={photoURL}
-            alt="Fundraiser"
+            alt="Item"
             className="rounded-lg shadow-md w-full h-[400px] object-cover"
           />
           <h1 className="text-3xl font-bold mt-4">{title}</h1>
-          <p className="text-gray-600 mt-2">
-            {/* <span className="font-semibold badge ">Types: {type} </span> */}
-          </p>
           <div
             className={`${
-              active ? "bg-green-400" : "bg-red-400"
+              type === "found" ? "bg-green-400" : "bg-red-400"
             } mt-4 p-4 rounded-md`}
           >
-            <p className="text-sm font-medium">
-              <i className="fas fa-shield-alt text-2xl mr-2 text-white">
-                {type}
-              </i>
-            </p>
+            <p className="text-sm font-medium">{type}</p>
           </div>
           <p className={`${dark ? "text-gray-200" : "text-gray-800"} mt-4`}>
             {description}
@@ -88,68 +106,97 @@ const Details = () => {
 
         {/* Right Section */}
         <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold">User</h2>
+          <h2 className="text-2xl font-bold">User Details</h2>
           <p className="text-gray-600">
             Name: {name} <br /> Mail: {mail}
           </p>
 
-          <button className="btn mt-6 btn-outline btn-accent w-full"></button>
+          <button className="btn btn-primary w-full my-4" onClick={checkUser}>
+            Mark as Recovered
+          </button>
 
-          {type == "found" ? (
-            <button
-              onClick={() => {
-                handleDonate(_id);
-              }}
-              className="btn btn-primary w-full my-2"
-            >
-              This is Mine!
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                handleDonate(_id);
-              }}
-              className="btn btn-primary w-full my-2"
-            >
-              Found This!
-            </button>
-          )}
-
-          <h3 className="mt-6 text-lg font-semibold">Other Informations</h3>
+          <h3 className="mt-6 text-lg font-semibold">Other Information</h3>
           <ul className="mt-4 space-y-2">
             <li className="flex justify-between">
-              <p className="font-medium">Lost date</p>
+              <p className="font-medium">Lost Date</p>
               <p className="text-gray-500">
                 {new Date(dateLost).toLocaleDateString("en-GB")}
               </p>
             </li>
             <li className="flex justify-between">
               <p className="font-medium">Lost Location</p>
-              <p className="text-gray-500">
-                {lostlocation}
-              </p>
+              <p className="text-gray-500">{lostlocation}</p>
             </li>
             <li className="flex justify-between">
-              <p className="font-medium">categories</p>
-              <p className="text-gray-500 text-left">
-                {categoryArray?.map((c, i) => <li key={i}>{i+1}{" "}{c}</li>)}
-              </p>
+              <p className="font-medium">Categories</p>
+              <ul className="text-gray-500 text-left list-disc ml-6">
+                {categoryArray?.map((c, i) => (
+                  <li key={i}>{c}</li>
+                ))}
+              </ul>
             </li>
-            {/* <li className="flex justify-between">
-              <p className="font-medium">Davinder Sapra</p>
-              <p className="text-gray-500">$5,000</p>
-            </li>
-            <li className="flex justify-between">
-              <p className="font-medium">Anonymous</p>
-              <p className="text-gray-500">$500</p>
-            </li> */}
           </ul>
         </div>
       </div>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>Details</title>
-      </Helmet>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Mark as Recovered</h3>
+            <div className="mt-4">
+              <label className="label">
+                <span className="label-text">Recovered Location</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Enter location"
+                className="input input-bordered w-full"
+                value={recoveredLocation}
+                onChange={(e) => setRecoveredLocation(e.target.value)}
+              />
+
+              <label className="label mt-4">
+                <span className="label-text">Recovered Date</span>
+              </label>
+              <DatePicker
+                selected={recoveredDate}
+                onChange={(date) => setRecoveredDate(date)}
+                className="input input-bordered w-full"
+                popperPlacement="bottom-start"
+                popperModifiers={[
+                  {
+                    name: "preventOverflow",
+                    options: {
+                      boundary: "viewport",
+                    },
+                  },
+                ]}
+              />
+
+              <div className="mt-4">
+                <p className="text-sm">
+                  <strong>Recovered By:</strong>
+                </p>
+                <p>Name: {user.name}</p>
+                <p>Email: {user.mail}</p>
+              </div>
+            </div>
+
+            <div className="modal-action">
+              <button
+                className="btn btn-ghost"
+                onClick={() => setModalOpen(false)}
+              >
+                Cancel
+              </button>
+              <button className="btn btn-primary" onClick={handleSubmit}>
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
