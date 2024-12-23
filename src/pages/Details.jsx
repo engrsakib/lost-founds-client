@@ -1,10 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const Details = () => {
   const { dark } = useContext(AuthContext);
@@ -30,6 +32,16 @@ const Details = () => {
   const [recoveredLocation, setRecoveredLocation] = useState("");
   const [recoveredDate, setRecoveredDate] = useState(new Date());
 
+  const [ recoverData, setRecoveredData ] = useState(null);
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/recovered-item/${_id}`).then((res) => {
+      setRecoveredData(res.data);
+    });
+  }, [_id, setRecoveredData]);
+
+  console.log(recoverData);
+
   const checkUser = () => {
     if (mail === user.mail) {
       Swal.fire({
@@ -53,19 +65,25 @@ const Details = () => {
     };
 
     try {
-      const recoveryResponse = await fetch("/api/recovered-items", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(recoveryData),
-      });
+      const recoveryResponse = await fetch(
+        "http://localhost:5000/api/recovered-items",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(recoveryData),
+        }
+      );
 
-      const statusResponse = await fetch(`/api/items/${_id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "recovered" }),
-      });
+      // const statusResponse = await fetch(
+      //   `http://localhost:5000/api/items/${_id}`,
+      //   {
+      //     method: "PATCH",
+      //     headers: { "Content-Type": "application/json" },
+      //     body: JSON.stringify({ status: "recovered" }),
+      //   }
+      // );
 
-      if (recoveryResponse.ok && statusResponse.ok) {
+      if (recoveryResponse.ok) {
         Swal.fire("Success!", "Item marked as recovered!", "success");
         setModalOpen(false); // Close the modal
       } else {
@@ -111,9 +129,23 @@ const Details = () => {
             Name: {name} <br /> Mail: {mail}
           </p>
 
-          <button className="btn btn-primary w-full my-4" onClick={checkUser}>
-            Mark as Recovered
-          </button>
+          {type === "lost" ? (
+            <button
+              disabled={recoverData?.itemId == _id}
+              className="btn btn-primary w-full my-4"
+              onClick={checkUser}
+            >
+              Found This!
+            </button>
+          ) : (
+            <button
+              disabled={recoverData?.itemId == _id}
+              className="btn btn-primary w-full my-4"
+              onClick={checkUser}
+            >
+              This is Mine!
+            </button>
+          )}
 
           <h3 className="mt-6 text-lg font-semibold">Other Information</h3>
           <ul className="mt-4 space-y-2">
