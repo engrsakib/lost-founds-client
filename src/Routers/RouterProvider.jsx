@@ -75,7 +75,7 @@ const router = createBrowserRouter([
           </Privete>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/lost-finds/${params.id}`),
+          fetch(`http://localhost:5000/recover/${params.id}`),
       },
       {
         path: "/donation/all-campagion/details/donated/:id",

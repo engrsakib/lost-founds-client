@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { ca } from "date-fns/locale";
 
 const Details = () => {
   const { dark } = useContext(AuthContext);
@@ -18,33 +19,47 @@ const Details = () => {
     _id,
     name,
     mail,
+    itemId,
     title,
+    user_name,
     photoURL,
     type,
     description,
     categoryArray,
+    dateRecovered,
+    location,
+    email,
     dateLost,
     lostlocation,
   } = data[0];
 
-  
+  // console.log(dateRecovered);
   // States for modal
   const [isModalOpen, setModalOpen] = useState(false);
   const [recoveredLocation, setRecoveredLocation] = useState("");
   const [recoveredDate, setRecoveredDate] = useState(new Date());
-
+  const [rec, setRec] = useState(null);
   const [ recoverData, setRecoveredData ] = useState(null);
 
   useEffect(() => {
     axios.get(`http://localhost:5000/api/recovered-item/${_id}`).then((res) => {
-      setRecoveredData(res.data);
+      setRec(res.data);
     });
-  }, [_id, setRecoveredData]);
+  }, [_id, setRec]);
 
   
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/recovered-item/${itemId}`)
+      .then((res) => {
+        setRecoveredData(res.data);
+      });
+  }, [itemId, setRecoveredData]);
+
+  // console.log("recoverData", recoverData);
 
   const checkUser = () => {
-    if (recoverData?.itemId == _id) {
+    if (rec?.itemId == _id || recoverData?._id == _id) {
       Swal.fire({
         icon: "error",
         title: "Already Recovered",
@@ -67,9 +82,11 @@ const Details = () => {
   const handleSubmit = async () => {
     const recoveryData = {
       itemId: _id,
-      name: user.name,
+      user_name: user.name,
       email: user.mail,
       image: user.photoURL,
+      mail: mail,
+      name: name,
       type: type,
       location: recoveredLocation,
       dateRecovered: recoveredDate,
@@ -78,6 +95,7 @@ const Details = () => {
       dateLost: dateLost,
       lostlocation: lostlocation,
       description: description,
+      categoryArray: categoryArray,
     };
 
     try {
@@ -102,6 +120,14 @@ const Details = () => {
       if (recoveryResponse.ok) {
         Swal.fire("Success!", "Item marked as recovered!", "success");
         setModalOpen(false); // Close the modal
+
+        
+          axios
+            .get(`http://localhost:5000/api/recovered-item/${_id}`)
+            .then((res) => {
+              setRec(res.data);
+            });
+
       } else {
         Swal.fire("Error", "Failed to mark item as recovered", "error");
       }
@@ -146,19 +172,11 @@ const Details = () => {
           </p>
 
           {type === "lost" ? (
-            <button
-              
-              className="btn btn-primary w-full my-4"
-              onClick={checkUser}
-            >
+            <button className="btn btn-primary w-full my-4" onClick={checkUser}>
               Found This!
             </button>
           ) : (
-            <button
-              
-              className="btn btn-primary w-full my-4"
-              onClick={checkUser}
-            >
+            <button className="btn btn-primary w-full my-4" onClick={checkUser}>
               This is Mine!
             </button>
           )}
@@ -175,14 +193,52 @@ const Details = () => {
               <p className="font-medium">Lost Location</p>
               <p className="text-gray-500">{lostlocation}</p>
             </li>
-            <li className="flex justify-between">
-              <p className="font-medium">Categories</p>
-              <ul className="text-gray-500 text-left list-disc ml-6">
-                {categoryArray?.map((c, i) => (
-                  <li key={i}>{c}</li>
-                ))}
-              </ul>
-            </li>
+            {dateRecovered && (
+              <li className="flex justify-between">
+                <p className="font-medium">Recovered Date</p>
+                <p className="text-gray-500">
+                  {new Date(dateRecovered).toLocaleDateString("en-GB")}
+                </p>
+              </li>
+            )}
+            {categoryArray && (
+              <li className="flex justify-between">
+                <p className="font-medium">Categories</p>
+                <ul className="text-gray-500 text-left list-disc ml-6">
+                  {categoryArray?.map((c, i) => (
+                    <li key={i}>{c}</li>
+                  ))}
+                </ul>
+              </li>
+            )}
+
+            {dateRecovered && (
+              <li className="flex justify-between">
+                <p className="font-medium">Recovered Date</p>
+                <p className="text-gray-500">
+                  {new Date(dateRecovered).toLocaleDateString("en-GB")}
+                </p>
+              </li>
+            )}
+
+            {location && (
+              <li className="flex justify-between">
+                <p className="font-medium">Recovered Location</p>
+                <p className="text-gray-500">{location}</p>
+              </li>
+            )}
+            {user_name && (
+              <li className="flex justify-between">
+                <p className="font-medium">Recovered Person Name:</p>
+                <p className="text-gray-500">{user_name}</p>
+              </li>
+            )}
+            {email && (
+              <li className="flex justify-between">
+                <p className="font-medium">Recovered Person Mail:</p>
+                <p className="text-gray-500">{email}</p>
+              </li>
+            )}
           </ul>
         </div>
       </div>
