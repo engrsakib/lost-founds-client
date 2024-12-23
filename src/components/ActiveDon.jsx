@@ -12,7 +12,7 @@ const ActiveDon = () => {
 
   useEffect(() => {
     setLoadding(true);
-    fetch(`http://localhost:5000/activeDonations`)
+    fetch(`http://localhost:5000/lostandfinds/sort`)
       .then((res) => res.json())
       .then((data) => {
         setDonations(data); // Update state with fetched data

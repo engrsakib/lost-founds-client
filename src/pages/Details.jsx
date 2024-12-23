@@ -43,6 +43,14 @@ const Details = () => {
   console.log(recoverData);
 
   const checkUser = () => {
+    if (recoverData?.itemId == _id) {
+      Swal.fire({
+        icon: "error",
+        title: "Already Recovered",
+        text: `Item already recovered!`,
+      });
+      return;
+    }
     if (mail === user.mail) {
       Swal.fire({
         icon: "error",
@@ -51,6 +59,7 @@ const Details = () => {
       });
       return;
     }
+    
     setModalOpen(true);
   };
 
@@ -131,7 +140,7 @@ const Details = () => {
 
           {type === "lost" ? (
             <button
-              disabled={recoverData?.itemId == _id}
+              
               className="btn btn-primary w-full my-4"
               onClick={checkUser}
             >
@@ -139,7 +148,7 @@ const Details = () => {
             </button>
           ) : (
             <button
-              disabled={recoverData?.itemId == _id}
+              
               className="btn btn-primary w-full my-4"
               onClick={checkUser}
             >

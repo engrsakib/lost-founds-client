@@ -4,33 +4,41 @@ import { Link } from 'react-router-dom';
 
 const ActiveCard = ({fund}) => {
     const {dark} = useContext(AuthContext);
+    const { _id, name, dateLost, type, photoURL, title, lostlocation } = fund;
     // console.log(fund)
     return (
       <>
-        <div
-          className={`card card-compact bg-base-100 w-full shadow-xl ${
-            dark && "border-yellow-300 border"
-          }`}
-        >
-          <figure>
-            <img className="w-full h-[300px]" src={fund.photoURL} alt="Shoes" />
-            <span className="badge-warning p-2 rounded-md absolute top-3 right-3">Active</span>
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">{fund.title}</h2>
-            <p className="text-left">Author: {fund.name}</p>
-            <p className="text-left">Minimum Amount: {fund.minimumMoney}</p>
-            <p className="text-left">Deadline: {fund.deadline}</p>
-            <div className="card-actions justify-end">
-              <Link
-                to={`/donation/all-campagion/details/${fund._id}`}
-                className="btn btn-primary"
-              >
-                Details
-              </Link>
-            </div>
-          </div>
-        </div>
+        <div className="col-span-1">
+                <div className="rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800 w-full h-[550px]">
+                  <img
+                    src={photoURL}
+                    alt=""
+                    className="object-cover object-center w-full rounded-t-md h-72 dark:bg-gray-500"
+                  />
+                  <div className="flex flex-col justify-between h-7 p-6 space-y-8">
+                    <div className="space-y-2">
+                      <h2 className="text-3xl font-semibold tracking-wide">
+                        {title.length > 10 ? `${title.substring(0, 20)}...` : title}
+                      </h2>
+                      <p className="dark:text-gray-800">
+                        Types: <span className="badge p-2 rounded-2xl">{type}</span>{" "}
+                        <br />
+                        Lost Location: {lostlocation} <br />
+                        <span>
+                          Date Lost: {new Date(dateLost).toLocaleDateString("en-GB")}
+                        </span>
+                      </p>
+                    </div>
+                    <Link
+                      type="button"
+                      to={`/lost-finds/all/details/${_id}`}
+                      className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-violet-600 dark:text-gray-50"
+                    >
+                      Details
+                    </Link>
+                  </div>
+                </div>
+              </div>
       </>
     );
 };

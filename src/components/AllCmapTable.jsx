@@ -22,7 +22,7 @@ const AllCmapTable = ({ d }) => {
             </div>
             <div className="w-[250px] md:w-[300px]">
               <div className="font-bold">
-                {title.length > 10 ? `${title.substring(0, 30)}...` : title}
+                {title.length > 10 ? `${title.substring(0, 20)}...` : title}
               </div>
               <div className="text-sm opacity-50">Author: {name}</div>
             </div>
