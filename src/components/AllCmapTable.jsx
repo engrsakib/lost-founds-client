@@ -37,7 +37,7 @@ const AllCmapTable = ({ d }) => {
         </div>
         <th>
           <Link
-            to={`/donation/all-campagion/details/${_id}`}
+            to={`/lost-finds/all/details/${_id}`}
             className="btn btn-ghost btn-xs"
           >
             details

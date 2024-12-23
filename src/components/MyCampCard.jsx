@@ -80,7 +80,7 @@ const MyCampCard = ({ d, setDonations }) => {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        navigate(`/donation/update/${id}`);
+        navigate(`/items/update/${id}`);
       } else if (result.isDenied) {
         Swal.fire("Documents Change is stoped", "", "info");
       }

@@ -1,15 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
+import { useQuery } from "@tanstack/react-query";
 
 const Details = () => {
   const { dark, setActive, active } = useContext(AuthContext);
   const data = useLoaderData();
   const navigate = useNavigate();
   const {user} = useContext(AuthContext);
-  // console.log(data[0])
+  console.log(data[0])
+  
+  const {p} = useParams();
+  console.log(p)
+    
+
   const {
     _id,
     name,
@@ -18,44 +24,13 @@ const Details = () => {
     photoURL,
     type,
     description,
-    moneyNedd,
-    minimumMoney,
-    deadline,
+    categoryArray,
+    dateLost,
+    lostlocation,
   } = data[0];
+  console.log(data[0]);
 
-  // count down
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-
-  useEffect(() => {
-    const targetDate = new Date(`${deadline}T00:00:00`);
-
-    const calculateTimeLeft = () => {
-      const now = new Date();
-      const difference = targetDate - now;
-
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((difference / (1000 * 60)) % 60);
-        const seconds = Math.floor((difference / 1000) % 60);
-        setActive(true);
-        setTimeLeft({ days, hours, minutes, seconds });
-      } else {
-        setActive(false);
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      }
-    };
-
-    const interval = setInterval(calculateTimeLeft, 1000);
-
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, [deadline, setActive]);
-
+ 
 
   // donetation section handel
   const handleDonate = (id)=>{
@@ -93,7 +68,7 @@ const Details = () => {
           />
           <h1 className="text-3xl font-bold mt-4">{title}</h1>
           <p className="text-gray-600 mt-2">
-            <span className="font-semibold badge ">Types: {type} </span>
+            {/* <span className="font-semibold badge ">Types: {type} </span> */}
           </p>
           <div
             className={`${
@@ -101,8 +76,8 @@ const Details = () => {
             } mt-4 p-4 rounded-md`}
           >
             <p className="text-sm font-medium">
-              <i className="fas fa-shield-alt mr-2 text-white">
-                {active ? "Active" : "Closed"}
+              <i className="fas fa-shield-alt text-2xl mr-2 text-white">
+                {type}
               </i>
             </p>
           </div>
@@ -113,39 +88,52 @@ const Details = () => {
 
         {/* Right Section */}
         <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold">{moneyNedd} TK needed</h2>
+          <h2 className="text-2xl font-bold">User</h2>
           <p className="text-gray-600">
             Name: {name} <br /> Mail: {mail}
           </p>
-          <div className="my-4">
-            <div className="relative h-4 w-full bg-gray-200 rounded-full">
-              <div
-                className="absolute top-0 left-0 h-4 bg-yellow-500 rounded-full"
-                style={{ width: "74%" }}
-              ></div>
-            </div>
-            <p className="text-sm text-gray-500 mt-1">74%</p>
-          </div>
-          <button className="btn btn-outline btn-accent w-full">
-            <p>
-              {timeLeft.days} days, {timeLeft.hours} hours, {timeLeft.minutes}{" "}
-              minutes, and {timeLeft.seconds} seconds
-            </p>
-          </button>
-          <button
-            onClick={() => {
-              handleDonate(_id);
-            }}
-            className="btn btn-primary w-full my-2"
-          >
-            Donate Now
-          </button>
+
+          <button className="btn mt-6 btn-outline btn-accent w-full"></button>
+
+          {type == "found" ? (
+            <button
+              onClick={() => {
+                handleDonate(_id);
+              }}
+              className="btn btn-primary w-full my-2"
+            >
+              This is Mine!
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                handleDonate(_id);
+              }}
+              className="btn btn-primary w-full my-2"
+            >
+              Found This!
+            </button>
+          )}
 
           <h3 className="mt-6 text-lg font-semibold">Other Informations</h3>
           <ul className="mt-4 space-y-2">
             <li className="flex justify-between">
-              <p className="font-medium">Minimum Donations Amount</p>
-              <p className="text-gray-500">{minimumMoney} TK</p>
+              <p className="font-medium">Lost date</p>
+              <p className="text-gray-500">
+                {new Date(dateLost).toLocaleDateString("en-GB")}
+              </p>
+            </li>
+            <li className="flex justify-between">
+              <p className="font-medium">Lost Location</p>
+              <p className="text-gray-500">
+                {lostlocation}
+              </p>
+            </li>
+            <li className="flex justify-between">
+              <p className="font-medium">categories</p>
+              <p className="text-gray-500 text-left">
+                {categoryArray?.map((c, i) => <li key={i}>{i+1}{" "}{c}</li>)}
+              </p>
             </li>
             {/* <li className="flex justify-between">
               <p className="font-medium">Davinder Sapra</p>
@@ -160,7 +148,7 @@ const Details = () => {
       </div>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Donations Details</title>
+        <title>Details</title>
       </Helmet>
     </>
   );

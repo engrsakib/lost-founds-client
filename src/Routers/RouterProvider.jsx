@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         element: <AllCamign></AllCamign>,
       },
       {
-        path: "/donation/update/:id",
+        path: "/items/update/:id",
         element: (
           <Privete>
             <Update></Update>
@@ -58,14 +58,14 @@ const router = createBrowserRouter([
           fetch(`http://localhost:5000/itemsUpadte/${params.id}`),
       },
       {
-        path: "/donation/all-campagion/details/:id",
+        path: "/lost-finds/all/details/:id",
         element: (
           <Privete>
             <Details></Details>
           </Privete>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/donations/${params.id}`),
+          fetch(`http://localhost:5000/lost-finds/${params.id}`),
       },
       {
         path: "/donation/all-campagion/details/donated/:id",

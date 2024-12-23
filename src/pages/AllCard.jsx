@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const AllCard = ({dt}) => {
-    console.log(dt);
+    // console.log(dt);
     const { _id, name, dateLost, type, photoURL, title, lostlocation } = dt;
     return (
       <div className="col-span-1 w-full h-[550px]">
@@ -28,10 +28,10 @@ const AllCard = ({dt}) => {
             </div>
             <Link
               type="button"
-              to={`/donation/all-campagion/details/${_id}`}
+              to={`/lost-finds/all/details/${_id}`}
               className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-violet-600 dark:text-gray-50"
             >
-              Read more
+              Details
             </Link>
           </div>
         </div>
