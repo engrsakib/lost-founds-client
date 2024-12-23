@@ -157,7 +157,7 @@ const Details = () => {
               type === "found" ? "bg-green-400" : "bg-red-400"
             } mt-4 p-4 rounded-md`}
           >
-            <p className="text-sm font-medium">{type}</p>
+            <p className="text-sm text-black font-medium">{type}</p>
           </div>
           <p className={`${dark ? "text-gray-200" : "text-gray-800"} mt-4`}>
             {description}
