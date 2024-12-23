@@ -33,67 +33,83 @@ const MyCamo = () => {
     return <Loading></Loading>;
   }
 
-  return (
-    <div>
-      <div className="text-center flex justify-between max-sm:flex-col items-center gap-2">
-        <h2 className="text-4xl font-bold text-orange-500">
-          My Items {donation.length}
-        </h2>
-
-        <div className="space-x-6 flex gap-3 justify-center items-center max-sm:flex-col">
-          <div className="join">
-            <button
-              onClick={() => {
-                isCard(true);
-              }}
-              className={`join-item btn ${card ? "btn-primary" : ""}`}
-              aria-label="Radio 3"
-              disabled={card}
-            >
-              Card Layout
-            </button>
-            <button
-              onClick={() => {
-                isCard(false);
-              }}
-              className={`join-item btn ${card ? "" : "btn-primary"}`}
-              disabled={!card}
-              aria-label="Radio 3"
-            >
-              Table Layout
-            </button>
-          </div>
+  if(donation.length == 0){
+    return (
+      <div>
+        <div className="text-center">
+          <h2 className="text-4xl font-bold text-orange-500">My Items</h2>
+          <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <img
+              src="https://i.ibb.co.com/ZX9b5F5/no-data-concept-illustration-114360-25063.jpg"
+              alt=""
+            />
+          </p>
         </div>
       </div>
-      <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Title and photo</th>
-              <th>Lost Location</th>
-              <th></th>
-              <th>Types</th>
-              <th>Date Lost</th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          {donation.map((d, index) => (
-            <MyCampCard
-              key={index}
-              d={d}
-              setDonations={setDonations}
-            ></MyCampCard>
-          ))}
-        </table>
+    );
+  }else{
+    return (
+      <div>
+        <div className="text-center flex justify-between max-sm:flex-col items-center gap-2">
+          <h2 className="text-4xl font-bold text-orange-500">
+            My Items {donation.length}
+          </h2>
+
+          <div className="space-x-6 flex gap-3 justify-center items-center max-sm:flex-col">
+            <div className="join">
+              <button
+                onClick={() => {
+                  isCard(true);
+                }}
+                className={`join-item btn ${card ? "btn-primary" : ""}`}
+                aria-label="Radio 3"
+                disabled={card}
+              >
+                Card Layout
+              </button>
+              <button
+                onClick={() => {
+                  isCard(false);
+                }}
+                className={`join-item btn ${card ? "" : "btn-primary"}`}
+                disabled={!card}
+                aria-label="Radio 3"
+              >
+                Table Layout
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Title and photo</th>
+                <th>Lost Location</th>
+                <th></th>
+                <th>Types</th>
+                <th>Date Lost</th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            {donation.map((d, index) => (
+              <MyCampCard
+                key={index}
+                d={d}
+                setDonations={setDonations}
+              ></MyCampCard>
+            ))}
+          </table>
+        </div>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>My Items</title>
+        </Helmet>
       </div>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>My Items</title>
-      </Helmet>
-    </div>
-  );
+    );
+  }
 };
 
 export default MyCamo;
