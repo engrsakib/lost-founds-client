@@ -18,9 +18,12 @@ const AllCard = ({dt}) => {
                 {title.length > 10 ? `${title.substring(0, 30)}...` : title}
               </h2>
               <p className="dark:text-gray-800">
-                Types: <span className='badge p-2 rounded-2xl'>{type}</span> <br />
+                Types: <span className="badge p-2 rounded-2xl">{type}</span>{" "}
+                <br />
                 Lost Location: {lostlocation} <br />
-                Date Lost: {dateLost}
+                <span>
+                  Date Lost: {new Date(dateLost).toLocaleDateString("en-GB")}
+                </span>
               </p>
             </div>
             <Link

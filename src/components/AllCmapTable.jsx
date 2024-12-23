@@ -33,7 +33,7 @@ const AllCmapTable = ({ d }) => {
         <td className="text-justify">{type}</td>
         <td></td>
         <div className="max-sm:w-[120px]">
-          <td>{dateLost}</td>
+          <td>{new Date(dateLost).toLocaleDateString("en-GB")}</td>
         </div>
         <th>
           <Link
