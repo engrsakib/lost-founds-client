@@ -51,32 +51,38 @@ const MyDonation = () => {
   if(data?.length !== 0){
     return (
       <div>
-        <div className="text-left">
-          <h2 className="text-4xl font-bold text-orange-500">
-            My Recover {data?.length}
-          </h2>
-        </div>
-        <div className="join">
-          <button
-            onClick={() => {
-              isCard(true);
-            }}
-            className={`join-item btn btn-warning ${card ? "btn-primary" : ""}`}
-            aria-label="Radio 3"
-            disabled={card}
-          >
-            <IoGrid />
-          </button>
-          <button
-            onClick={() => {
-              isCard(false);
-            }}
-            className={`join-item btn btn-warning ${card ? "" : "btn-primary"}`}
-            disabled={!card}
-            aria-label="Radio 3"
-          >
-            <FaList />
-          </button>
+        <div className="flex justify-between items-center mt-3">
+          <div className="text-left">
+            <h2 className="text-4xl font-bold text-orange-500">
+              My Recover {data?.length}
+            </h2>
+          </div>
+          <div className="join">
+            <button
+              onClick={() => {
+                isCard(true);
+              }}
+              className={`join-item btn btn-warning ${
+                card ? "btn-primary" : ""
+              }`}
+              aria-label="Radio 3"
+              disabled={card}
+            >
+              <IoGrid />
+            </button>
+            <button
+              onClick={() => {
+                isCard(false);
+              }}
+              className={`join-item btn btn-warning ${
+                card ? "" : "btn-primary"
+              }`}
+              disabled={!card}
+              aria-label="Radio 3"
+            >
+              <FaList />
+            </button>
+          </div>
         </div>
         <AllR data={data} card={card}></AllR>
         <Helmet>

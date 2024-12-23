@@ -10,8 +10,8 @@ const MyCamo = () => {
   const [donation, setDonations] = useState(null);
   const [loadding, setLoadding] = useState(true);
 
-  const [card, isCard] = useState(true);
-  console.log(card);
+  // const [card, isCard] = useState(true);
+  // console.log(card);
 
   useEffect(() => {
     if (user?.mail) {

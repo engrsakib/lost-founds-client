@@ -30,14 +30,14 @@ const ActiveDon = () => {
   return (
     <div>
       <div className="text-center">
-        <h2 className="text-4xl font-bold text-orange-500">Active Donations</h2>
+        <h2 className="text-4xl font-bold text-orange-500">Active Item's</h2>
         <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          ActiveCampaign is a powerful customer experience automation (CXA)
-          platform that integrates email marketing, marketing automation, sales
-          automation, and customer relationship management (CRM) tools into a
-          single platform. It is widely used by businesses of all sizes to
-          improve engagement, nurture leads, and drive customer retention. Below
-          are the key details about ActiveCampaign:
+          A Lost & Found Recovery System is designed to assist individuals in
+          locating and recovering lost items. It streamlines the process of
+          reporting lost belongings, verifying ownership, and ensuring secure
+          handover to rightful owners. Such systems foster transparency, reduce
+          disputes, and enhance user trust by ensuring a seamless recovery
+          experience. Would you like help developing a similar system?
         </p>
       </div>
 

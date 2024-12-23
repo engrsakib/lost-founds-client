@@ -111,7 +111,7 @@ const Update = () => {
             lostlocation: "",
           });
           setCategoryInput("");
-          navigate(`/finds-losts/my-Iteam`);
+          navigate(`/lost-finds/all/details/${_id}`);
         } else {
           Swal.fire({
             icon: "error",
