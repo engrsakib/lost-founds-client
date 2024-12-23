@@ -22,7 +22,7 @@ const AllCmapTable = ({ d }) => {
             </div>
             <div className="w-[250px] md:w-[300px]">
               <div className="font-bold">
-                {title.length > 50 ? `${title.substring(0, 20)}...` : title}
+                {title.length > 10 ? `${title.substring(0, 30)}...` : title}
               </div>
               <div className="text-sm opacity-50">Author: {name}</div>
             </div>
@@ -33,9 +33,7 @@ const AllCmapTable = ({ d }) => {
         <td className="text-justify">{type}</td>
         <td></td>
         <div className="max-sm:w-[120px]">
-          <td>
-            {dateLost}
-          </td>
+          <td>{dateLost}</td>
         </div>
         <th>
           <Link

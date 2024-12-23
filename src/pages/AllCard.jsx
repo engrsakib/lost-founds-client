@@ -5,8 +5,8 @@ const AllCard = ({dt}) => {
     console.log(dt);
     const { _id, name, dateLost, type, photoURL, title, lostlocation } = dt;
     return (
-      <div className="col-span-1">
-        <div className="w-d rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800">
+      <div className="col-span-1 w-full h-[550px]">
+        <div className="rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800">
           <img
             src={photoURL}
             alt=""
@@ -14,9 +14,11 @@ const AllCard = ({dt}) => {
           />
           <div className="flex flex-col justify-between p-6 space-y-8">
             <div className="space-y-2">
-              <h2 className="text-3xl font-semibold tracking-wide">{title}</h2>
+              <h2 className="text-3xl font-semibold tracking-wide">
+                {title.length > 10 ? `${title.substring(0, 30)}...` : title}
+              </h2>
               <p className="dark:text-gray-800">
-                Types: {type} <br />
+                Types: <span className='badge p-2 rounded-2xl'>{type}</span> <br />
                 Lost Location: {lostlocation} <br />
                 Date Lost: {dateLost}
               </p>

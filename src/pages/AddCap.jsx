@@ -84,7 +84,7 @@ const AddCap = () => {
     setImageUploading(true);
     try {
       const response = await fetch(
-        `https://api.imgbb.com/1/upload?key=ff3d9127cce3eed275891ef32d478736`, // Replace with your API key
+        `https://api.imgbb.com/1/upload?key=ff3d9127cce3eed275891ef32d478736`,
         {
           method: "POST",
           body: imageData,
@@ -349,6 +349,9 @@ const AddCap = () => {
                   onChange={(e) => handleImageUpload(e.target.files[0])}
                   className="file-input file-input-bordered w-full"
                 />
+              </div>
+              <div>
+                <h1>OR</h1>
               </div>
               <div>
                 <label className="label">Photo URL</label>
