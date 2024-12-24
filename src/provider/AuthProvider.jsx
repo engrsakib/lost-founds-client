@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
   // Initialize dark mode state with data from localStorage
   const [dark, setdark] = useState(() => {
     const savedTheme = localStorage.getItem("darkMode");
-    return savedTheme ? JSON.parse(savedTheme) : true;
+    return savedTheme ? JSON.parse(savedTheme) : false;
   });
 
   // active donation

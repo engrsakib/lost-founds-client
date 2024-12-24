@@ -15,7 +15,7 @@ const Details = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   
-
+console.log(user)
   const {
     _id,
     name,
@@ -29,6 +29,7 @@ const Details = () => {
     categoryArray,
     dateRecovered,
     location,
+    user_photo,
     email,
     dateLost,
     lostlocation,
@@ -85,6 +86,7 @@ const Details = () => {
       itemId: _id,
       user_name: user.name,
       email: user.mail,
+      user_photo: user.photo,
       image: user.photoURL,
       mail: mail,
       name: name,
@@ -167,7 +169,7 @@ const Details = () => {
 
         {/* Right Section */}
         <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold">User Details</h2>
+          <h2 className="text-2xl font-bold">Contact Information</h2>
           <p className="text-gray-600">
             Name: {name} <br /> Mail: {mail}
           </p>
@@ -212,6 +214,28 @@ const Details = () => {
                 </ul>
               </li>
             )}
+            <h1 className="mt-6 text-lg font-semibold">
+              Recoverer Information
+            </h1>
+
+            {user_photo && (
+              <li className="flex justify-between">
+                <img className="w-[450px] rounded-2xl" src={user_photo} alt="" />
+              </li>
+            )}
+
+            {user_name && (
+              <li className="flex justify-between">
+                <p className="font-medium">Recovered Person Name:</p>
+                <p className="text-gray-500">{user_name}</p>
+              </li>
+            )}
+            {email && (
+              <li className="flex justify-between">
+                <p className="font-medium">Recovered Person Mail:</p>
+                <p className="text-gray-500">{email}</p>
+              </li>
+            )}
 
             {dateRecovered && (
               <li className="flex justify-between">
@@ -226,18 +250,6 @@ const Details = () => {
               <li className="flex justify-between">
                 <p className="font-medium">Recovered Location</p>
                 <p className="text-gray-500">{location}</p>
-              </li>
-            )}
-            {user_name && (
-              <li className="flex justify-between">
-                <p className="font-medium">Recovered Person Name:</p>
-                <p className="text-gray-500">{user_name}</p>
-              </li>
-            )}
-            {email && (
-              <li className="flex justify-between">
-                <p className="font-medium">Recovered Person Mail:</p>
-                <p className="text-gray-500">{email}</p>
               </li>
             )}
           </ul>
@@ -284,8 +296,13 @@ const Details = () => {
                 <p className="text-sm">
                   <strong>Recovered By:</strong>
                 </p>
-                <p>Name: {user.name}</p>
-                <p>Email: {user.mail}</p>
+                <p>Name: {user?.name}</p>
+                <p>Email: {user?.mail}</p>
+                <img
+                  className="w-24 h-24 mx-auto mt-3 rounded-full"
+                  src={user?.photo}
+                  alt="user photo"
+                />
               </div>
             </div>
 
