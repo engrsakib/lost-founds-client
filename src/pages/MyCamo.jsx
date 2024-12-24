@@ -5,6 +5,7 @@ import AllCmapTable from "../components/AllCmapTable";
 import { Helmet } from "react-helmet";
 import Loading from "../components/Loading";
 import axios from "axios";
+import useAxiosSecure from "../auth/useAxiosSecure";
 
 const MyCamo = () => {
   const { user, dark } = useContext(AuthContext);
@@ -13,27 +14,29 @@ const MyCamo = () => {
 
   // const [card, isCard] = useState(true);
   // console.log(card);
-
+  const axiosSecure = useAxiosSecure();
   useEffect(() => {
     if (user?.mail) {
       setLoadding(true);
-      axios.get(`http://localhost:5000/myitems/${user.mail}`,{withCredentials: true})
+
+      axiosSecure
+        .get(`/myitems/${user.mail}`)
         .then((data) => {
-          setDonations(data.data); // Update state with fetched data
-          setLoadding(false); // End loadding
+          setDonations(data.data); 
+          setLoadding(false); 
         })
         .catch((err) => {
           console.error(err);
-          setLoadding(false); // End loadding even on error
+          setLoadding(false);
         });
     }
-  }, [user?.mail]);
+  }, [user?.mail, axiosSecure]);
 
   if (loadding) {
     return <Loading></Loading>;
   }
 
-  if(donation.length == 0){
+  if (donation.length == 0) {
     return (
       <div>
         <div className="text-center">
@@ -47,7 +50,7 @@ const MyCamo = () => {
         </div>
       </div>
     );
-  }else{
+  } else {
     return (
       <div>
         <div className="text-center flex justify-between max-sm:flex-col items-center gap-2">
@@ -69,13 +72,14 @@ const MyCamo = () => {
                 <th></th>
               </tr>
             </thead>
-            {donation && donation.map((d, index) => (
-              <MyCampCard
-                key={index}
-                d={d}
-                setDonations={setDonations}
-              ></MyCampCard>
-            ))}
+            {donation &&
+              donation.map((d, index) => (
+                <MyCampCard
+                  key={index}
+                  d={d}
+                  setDonations={setDonations}
+                ></MyCampCard>
+              ))}
           </table>
         </div>
         <Helmet>
