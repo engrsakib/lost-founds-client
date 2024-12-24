@@ -48,6 +48,17 @@ const AuthProvider = ({ children }) => {
         setLoadding(false);
       }, 1000);
 
+      if(Currentuser?.email){
+        const user = {email: Currentuser.email};
+
+        axios
+          .post("http://localhost:5000/jwt", user, {
+            withCredentials: true,
+          })
+          .then((data) => {
+            console.log(data.data);
+          });
+      }
       if (Currentuser?.email) {
         fetch(`http://localhost:5000/users/${Currentuser?.email}`)
           .then((res) => res.json())
@@ -63,13 +74,7 @@ const AuthProvider = ({ children }) => {
           )
           .then((res) => console.log(res.data));
       }
-      axios
-        .post("http://localhost:5000/jwt", Currentuser, {
-          withCredentials: true,
-        })
-        .then((data) => {
-          console.log(data.data);
-        });
+      
     });
 
     return () => {

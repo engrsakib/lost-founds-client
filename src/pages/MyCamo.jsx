@@ -4,10 +4,11 @@ import MyCampCard from "../components/MyCampCard";
 import AllCmapTable from "../components/AllCmapTable";
 import { Helmet } from "react-helmet";
 import Loading from "../components/Loading";
+import axios from "axios";
 
 const MyCamo = () => {
   const { user, dark } = useContext(AuthContext);
-  const [donation, setDonations] = useState(null);
+  const [donation, setDonations] = useState([]);
   const [loadding, setLoadding] = useState(true);
 
   // const [card, isCard] = useState(true);
@@ -16,10 +17,9 @@ const MyCamo = () => {
   useEffect(() => {
     if (user?.mail) {
       setLoadding(true);
-      fetch(`http://localhost:5000/myitems/${user.mail}`)
-        .then((res) => res.json())
+      axios.get(`http://localhost:5000/myitems/${user.mail}`,{withCredentials: true})
         .then((data) => {
-          setDonations(data); // Update state with fetched data
+          setDonations(data.data); // Update state with fetched data
           setLoadding(false); // End loadding
         })
         .catch((err) => {
@@ -69,7 +69,7 @@ const MyCamo = () => {
                 <th></th>
               </tr>
             </thead>
-            {donation.map((d, index) => (
+            {donation && donation.map((d, index) => (
               <MyCampCard
                 key={index}
                 d={d}
