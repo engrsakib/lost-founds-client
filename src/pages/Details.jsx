@@ -14,6 +14,7 @@ const Details = () => {
   const data = useLoaderData();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  
 
   const {
     _id,

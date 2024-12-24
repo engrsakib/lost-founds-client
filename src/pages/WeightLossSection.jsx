@@ -75,7 +75,7 @@ const WeightLossSection = () => {
           className={`btn btn-primary px-6 py-3 rounded-md ${
             dark ? "bg-white text-gray-800" : "bg-black text-white"
           }`}
-          to={`finds-losts/all-finds`}
+          to={`/donation/add-campagion`}
         >
           Get started →
         </Link>

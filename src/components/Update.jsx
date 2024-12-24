@@ -4,12 +4,15 @@ import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
 import DatePicker from "react-datepicker";
+import useAxiosSecure from "../auth/useAxiosSecure";
 
 const Update = () => {
   const updateData = useLoaderData();
   const [categoryInput, setCategoryInput] = useState("");
   const navigate = useNavigate();
   // console.log(updateData)
+  const axiosSecure = useAxiosSecure();
+  
   const {
     _id,
     name,

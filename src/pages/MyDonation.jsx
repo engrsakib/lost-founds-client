@@ -8,21 +8,18 @@ import { IoGrid } from "react-icons/io5";
 import { FaList } from "react-icons/fa";
 import All from "./All";
 import AllR from "./AllR";
+import useAxiosSecure from "../auth/useAxiosSecure";
 
 const MyDonation = () => {
   const { user, dark } = useContext(AuthContext);
   const [card, isCard] = useState(true);
   const [data, setdata] = useState(null);
   const [loadding, setLoadding] = useState(true);
-
+  const axiosSecure = useAxiosSecure();
   useEffect(() => {
     if (user?.mail) {
       setLoadding(true);
-      
-      axios
-        .get(`http://localhost:5000/myrecover/items/${user.mail}`, {
-          withCredentials: true,
-        })
+      axiosSecure(`/myrecover/items/${user.mail}`)
         .then((data) => {
           setdata(data.data);
           setLoadding(false);
@@ -38,8 +35,8 @@ const MyDonation = () => {
   if (loadding) {
     return <Loading></Loading>;
   }
-  
-  if(data?.length !== 0){
+
+  if (data?.length !== 0) {
     return (
       <div>
         <div className="flex justify-between items-center mt-3">
@@ -82,7 +79,7 @@ const MyDonation = () => {
         </Helmet>
       </div>
     );
-  }else{
+  } else {
     return (
       <div>
         <div className="text-center">
