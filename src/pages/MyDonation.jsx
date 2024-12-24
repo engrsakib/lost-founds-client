@@ -18,16 +18,7 @@ const MyDonation = () => {
   useEffect(() => {
     if (user?.mail) {
       setLoadding(true);
-      // fetch(`http://localhost:5000/myMoney/${user.mail}`)
-      //   .then((res) => res.json())
-      //   .then((data) => {
-      //     setDonations(data);
-      //     setLoadding(false);
-      //   })
-      //   .catch((err) => {
-      //     console.error(err);
-      //     setLoadding(false);
-      //   });
+      
       axios
         .get(`http://localhost:5000/myrecover/items/${user.mail}`, {
           withCredentials: true,

@@ -55,6 +55,25 @@ const AllCamign = () => {
     return <Loading></Loading>;
   }
   // console.log(data);
+
+// sort function
+const handlesumbit = (e) => {
+  e.preventDefault();
+  const search = e.target[0].value;
+  console.log(search);
+  fetch(`http://localhost:5000/lostandfinds/search/${search}`)
+    .then((res) => res.json())
+    .then((data) => {
+      setData(data); 
+      setLoadding(false); 
+    })
+    .catch((err) => {
+      console.error(err);
+      setLoadding(false); 
+    });
+}
+
+
   return (
     <div>
       <div className="text-center flex justify-between max-sm:flex-col items-center gap-2">
@@ -63,13 +82,17 @@ const AllCamign = () => {
         </h2>
         <div className="space-x-6 flex gap-3 justify-center items-center max-sm:flex-col">
           {/* search start */}
-          <div className="join">
-            <input
-              className="input input-bordered join-item"
-              placeholder="serach your items"
-            />
-            <button className="btn btn-warning join-item rounded-r-full">Search</button>
-          </div>
+          <form action="" onSubmit={handlesumbit}>
+            <div className="join">
+              <input
+                className="input input-bordered join-item"
+                placeholder="serach your items"
+              />
+              <button className="btn btn-warning join-item rounded-r-full">
+                Search
+              </button>
+            </div>
+          </form>
           {/* search end */}
 
           <div className="join">
@@ -84,7 +107,9 @@ const AllCamign = () => {
               onClick={() => {
                 isCard(true);
               }}
-              className={`join-item btn btn-warning ${card ? "btn-primary" : ""}`}
+              className={`join-item btn btn-warning ${
+                card ? "btn-primary" : ""
+              }`}
               aria-label="Radio 3"
               disabled={card}
             >
@@ -94,7 +119,9 @@ const AllCamign = () => {
               onClick={() => {
                 isCard(false);
               }}
-              className={`join-item btn btn-warning ${card ? "" : "btn-primary"}`}
+              className={`join-item btn btn-warning ${
+                card ? "" : "btn-primary"
+              }`}
               disabled={!card}
               aria-label="Radio 3"
             >
