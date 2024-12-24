@@ -12,7 +12,7 @@ const Update = () => {
   const navigate = useNavigate();
   // console.log(updateData)
   const axiosSecure = useAxiosSecure();
-  
+
   const {
     _id,
     name,
@@ -26,7 +26,7 @@ const Update = () => {
     description,
   } = updateData;
 
-  console.log(updateData)
+  console.log(updateData);
   const { user } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: user.name, // Static data for demonstration
@@ -40,13 +40,11 @@ const Update = () => {
     lostlocation: lostlocation,
   });
 
-
   // Handle form field updates
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
 
   // handle date change
   const handleDateChange = (date) => {
@@ -54,28 +52,28 @@ const Update = () => {
   };
 
   // Handle category input
-   const handleCategoryChange = (e) => {
-     const value = e.target.value;
-     setCategoryInput(value);
-     if (value.includes(",")) {
-       const categories = value
-         .split(",")
-         .map((cat) => cat.trim())
-         .filter((cat) => cat !== "");
-       setFormData({
-         ...formData,
-         categoryArray: [...formData.categoryArray, ...categories],
-       });
-       setCategoryInput("");
-     }
-   };
+  const handleCategoryChange = (e) => {
+    const value = e.target.value;
+    setCategoryInput(value);
+    if (value.includes(",")) {
+      const categories = value
+        .split(",")
+        .map((cat) => cat.trim())
+        .filter((cat) => cat !== "");
+      setFormData({
+        ...formData,
+        categoryArray: [...formData.categoryArray, ...categories],
+      });
+      setCategoryInput("");
+    }
+  };
 
-   const removeCategory = (index) => {
-     const updatedCategories = formData.categoryArray.filter(
-       (_, idx) => idx !== index
-     );
-     setFormData({ ...formData, categoryArray: updatedCategories });
-   };
+  const removeCategory = (index) => {
+    const updatedCategories = formData.categoryArray.filter(
+      (_, idx) => idx !== index
+    );
+    setFormData({ ...formData, categoryArray: updatedCategories });
+  };
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,7 +88,7 @@ const Update = () => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         const response = await fetch(
-          `http://localhost:5000/itemsUpadte/${_id}`,
+          `https://lost-founds-server.vercel.app/itemsUpadte/${_id}`,
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -263,16 +261,16 @@ const Update = () => {
 
           {/* Deadline */}
           <div>
-                    <label className="label">Date Lost</label>
-                    <DatePicker
-                      selected={formData.dateLost}
-                      onChange={handleDateChange}
-                      dateFormat="yyyy-MM-dd"
-                      className="input input-bordered w-full"
-                      required
-                      maxDate={new Date()} // Disable future dates
-                    />
-                  </div>
+            <label className="label">Date Lost</label>
+            <DatePicker
+              selected={formData.dateLost}
+              onChange={handleDateChange}
+              dateFormat="yyyy-MM-dd"
+              className="input input-bordered w-full"
+              required
+              maxDate={new Date()} // Disable future dates
+            />
+          </div>
 
           {/* Submit Button */}
           <div className="text-center">

@@ -14,8 +14,8 @@ const Details = () => {
   const data = useLoaderData();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  
-console.log(user)
+
+  console.log(user);
   const {
     _id,
     name,
@@ -41,18 +41,19 @@ console.log(user)
   const [recoveredLocation, setRecoveredLocation] = useState("");
   const [recoveredDate, setRecoveredDate] = useState(new Date());
   const [rec, setRec] = useState(null);
-  const [ recoverData, setRecoveredData ] = useState(null);
+  const [recoverData, setRecoveredData] = useState(null);
 
-  useEffect(() => {
-    axios.get(`http://localhost:5000/api/recovered-item/${_id}`).then((res) => {
-      setRec(res.data);
-    });
-  }, [_id, setRec]);
-
-  
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/recovered-item/${itemId}`)
+      .get(`https://lost-founds-server.vercel.app/api/recovered-item/${_id}`)
+      .then((res) => {
+        setRec(res.data);
+      });
+  }, [_id, setRec]);
+
+  useEffect(() => {
+    axios
+      .get(`https://lost-founds-server.vercel.app/api/recovered-item/${itemId}`)
       .then((res) => {
         setRecoveredData(res.data);
       });
@@ -77,7 +78,7 @@ console.log(user)
       });
       return;
     }
-    
+
     setModalOpen(true);
   };
 
@@ -103,7 +104,7 @@ console.log(user)
 
     try {
       const recoveryResponse = await fetch(
-        "http://localhost:5000/api/recovered-items",
+        "https://lost-founds-server.vercel.app/api/recovered-items",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -112,7 +113,7 @@ console.log(user)
       );
 
       // const statusResponse = await fetch(
-      //   `http://localhost:5000/api/items/${_id}`,
+      //   `https://lost-founds-server.vercel.app/api/items/${_id}`,
       //   {
       //     method: "PATCH",
       //     headers: { "Content-Type": "application/json" },
@@ -124,13 +125,13 @@ console.log(user)
         Swal.fire("Success!", "Item marked as recovered!", "success");
         setModalOpen(false); // Close the modal
 
-        
-          axios
-            .get(`http://localhost:5000/api/recovered-item/${_id}`)
-            .then((res) => {
-              setRec(res.data);
-            });
-
+        axios
+          .get(
+            `https://lost-founds-server.vercel.app/api/recovered-item/${_id}`
+          )
+          .then((res) => {
+            setRec(res.data);
+          });
       } else {
         Swal.fire("Error", "Failed to mark item as recovered", "error");
       }
@@ -220,7 +221,11 @@ console.log(user)
 
             {user_photo && (
               <li className="flex justify-between">
-                <img className="w-[450px] rounded-2xl" src={user_photo} alt="" />
+                <img
+                  className="w-[450px] rounded-2xl"
+                  src={user_photo}
+                  alt=""
+                />
               </li>
             )}
 

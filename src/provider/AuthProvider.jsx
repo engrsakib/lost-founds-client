@@ -48,11 +48,11 @@ const AuthProvider = ({ children }) => {
         setLoadding(false);
       }, 1000);
 
-      if(Currentuser?.email){
-        const user = {email: Currentuser.email};
+      if (Currentuser?.email) {
+        const user = { email: Currentuser.email };
 
         axios
-          .post("http://localhost:5000/jwt", user, {
+          .post("https://lost-founds-server.vercel.app/jwt", user, {
             withCredentials: true,
           })
           .then((data) => {
@@ -60,13 +60,15 @@ const AuthProvider = ({ children }) => {
           });
       }
       if (Currentuser?.email) {
-        fetch(`http://localhost:5000/users/${Currentuser?.email}`)
+        fetch(
+          `https://lost-founds-server.vercel.app/users/${Currentuser?.email}`
+        )
           .then((res) => res.json())
           .then((data) => setUser(data[0]));
       } else {
         axios
           .post(
-            "http://localhost:5000/logout",
+            "https://lost-founds-server.vercel.app/logout",
             {},
             {
               withCredentials: true,
@@ -74,7 +76,6 @@ const AuthProvider = ({ children }) => {
           )
           .then((res) => console.log(res.data));
       }
-      
     });
 
     return () => {

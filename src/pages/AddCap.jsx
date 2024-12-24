@@ -146,11 +146,14 @@ const AddCap = () => {
       denyButtonText: "Don't save",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const response = await fetch("http://localhost:5000/lostandfinds", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+        const response = await fetch(
+          "https://lost-founds-server.vercel.app/lostandfinds",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          }
+        );
 
         if (response.ok) {
           Swal.fire("Saved!", "", "success");

@@ -12,7 +12,7 @@ const ActiveDon = () => {
 
   useEffect(() => {
     setLoadding(true);
-    fetch(`http://localhost:5000/lostandfinds/sort`)
+    fetch(`https://lost-founds-server.vercel.app/lostandfinds/sort`)
       .then((res) => res.json())
       .then((data) => {
         setDonations(data); // Update state with fetched data

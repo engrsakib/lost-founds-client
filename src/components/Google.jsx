@@ -30,7 +30,7 @@ const Google = () => {
         };
 
         if (!user || user.mail !== users.email) {
-          fetch("http://localhost:5000/users", {
+          fetch("https://lost-founds-server.vercel.app/users", {
             method: "POST",
             headers: {
               "content-type": "application/json",

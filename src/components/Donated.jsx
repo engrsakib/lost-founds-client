@@ -47,11 +47,14 @@ const Donated = () => {
 
     // Send data to backend
     try {
-      const response = await fetch("http://localhost:5000/myMoney", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(donationData),
-      });
+      const response = await fetch(
+        "https://lost-founds-server.vercel.app/myMoney",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(donationData),
+        }
+      );
 
       if (response.ok) {
         navigete(`/donation/all-campagion/details/${_id}`);

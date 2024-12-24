@@ -15,7 +15,7 @@ const AllCamign = () => {
   const { dark, user } = useContext(AuthContext);
 
   const [card, isCard] = useState(true);
-  
+
   const [data, setData] = useState(null);
   setTimeout(() => {
     setData(d);
@@ -23,11 +23,10 @@ const AllCamign = () => {
 
   const [loadding, setLoadding] = useState(true);
 
-
   useEffect(() => {
     setLoadding(true);
     axios
-      .get("http://localhost:5000/lostandfinds")
+      .get("https://lost-founds-server.vercel.app/lostandfinds")
       .then((data) => {
         setData(data.data); // Update state with fetched data
         setLoadding(false); // End loadding
@@ -39,7 +38,7 @@ const AllCamign = () => {
   }, []);
 
   const handleSort = () => {
-    fetch(`http://localhost:5000/lostandfinds/sorted`)
+    fetch(`https://lost-founds-server.vercel.app/lostandfinds/sorted`)
       .then((res) => res.json())
       .then((data) => {
         setData(data); // Update state with fetched data
@@ -56,23 +55,22 @@ const AllCamign = () => {
   }
   // console.log(data);
 
-// sort function
-const handlesumbit = (e) => {
-  e.preventDefault();
-  const search = e.target[0].value;
-  console.log(search);
-  fetch(`http://localhost:5000/lostandfinds/search/${search}`)
-    .then((res) => res.json())
-    .then((data) => {
-      setData(data); 
-      setLoadding(false); 
-    })
-    .catch((err) => {
-      console.error(err);
-      setLoadding(false); 
-    });
-}
-
+  // sort function
+  const handlesumbit = (e) => {
+    e.preventDefault();
+    const search = e.target[0].value;
+    console.log(search);
+    fetch(`https://lost-founds-server.vercel.app/lostandfinds/search/${search}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setLoadding(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoadding(false);
+      });
+  };
 
   return (
     <div>
