@@ -6,7 +6,7 @@ const AllCard = ({dt}) => {
     const { _id, name, dateLost, type, photoURL, title, lostlocation } = dt;
     
     return (
-      <div className="col-span-1">
+      <div className="col-span-1  max-sm:pb-11">
         <div className="rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800 w-full h-[550px]">
           <img
             src={photoURL}
