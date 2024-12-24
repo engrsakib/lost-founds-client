@@ -59,7 +59,7 @@ const AllCamign = () => {
   const handlesumbit = (e) => {
     e.preventDefault();
     const search = e.target[0].value;
-    console.log(search);
+    // console.log(search);
     fetch(`https://lost-founds-server.vercel.app/lostandfinds/search/${search}`)
       .then((res) => res.json())
       .then((data) => {

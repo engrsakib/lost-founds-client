@@ -15,7 +15,7 @@ const Details = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
-  console.log(user);
+  // console.log(user);
   const {
     _id,
     name,

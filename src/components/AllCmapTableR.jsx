@@ -5,7 +5,7 @@ import { AuthContext } from "../provider/AuthProvider";
 const AllCmapTableR = ({ d }) => {
   const { dark, active } = useContext(AuthContext);
   const { _id, name, dateLost, type, photoURL, title, lostlocation } = d;
-    console.log(d)
+    // console.log(d)
   return (
     <>
       <tr
