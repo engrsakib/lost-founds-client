@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useAxiosSecure from "../auth/useAxiosSecure";
 
 const AddCap = () => {
   const { user } = useContext(AuthContext);
@@ -19,9 +20,10 @@ const AddCap = () => {
     dateLost: new Date(),
   });
   const [imageUploading, setImageUploading] = useState(false);
-  const [categoryInput, setCategoryInput] = useState(""); // For category input field
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
-  const [photoUrlInput, setPhotoUrlInput] = useState(""); // To handle photo URL input
+  const [categoryInput, setCategoryInput] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [photoUrlInput, setPhotoUrlInput] = useState("");
+  const axiosSecure = useAxiosSecure();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -147,7 +149,7 @@ const AddCap = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const response = await fetch(
-          "https://lost-founds-server.vercel.app/lostandfinds",
+          "https://lostserver.vercel.app/lostandfinds",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

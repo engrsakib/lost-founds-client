@@ -52,7 +52,7 @@ const AuthProvider = ({ children }) => {
         const user = { email: Currentuser.email };
 
         axios
-          .post("https://lost-founds-server.vercel.app/jwt", user, {
+          .post("https://lostserver.vercel.app/jwt", user, {
             withCredentials: true,
           })
           .then((data) => {
@@ -60,15 +60,13 @@ const AuthProvider = ({ children }) => {
           });
       }
       if (Currentuser?.email) {
-        fetch(
-          `https://lost-founds-server.vercel.app/users/${Currentuser?.email}`
-        )
+        fetch(`https://lostserver.vercel.app/users/${Currentuser?.email}`)
           .then((res) => res.json())
           .then((data) => setUser(data[0]));
       } else {
         axios
           .post(
-            "https://lost-founds-server.vercel.app/logout",
+            "https://lostserver.vercel.app/logout",
             {},
             {
               withCredentials: true,

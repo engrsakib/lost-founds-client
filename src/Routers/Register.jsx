@@ -71,7 +71,7 @@ const Register = () => {
           lastSignInDate: user?.metadata?.lastSignInTime,
         };
 
-        fetch("https://lost-founds-server.vercel.app/users", {
+        fetch("https://lostserver.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",

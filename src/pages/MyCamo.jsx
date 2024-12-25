@@ -12,6 +12,8 @@ const MyCamo = () => {
   const [donation, setDonations] = useState([]);
   const [loadding, setLoadding] = useState(true);
 
+
+  console.log(user)
   // const [card, isCard] = useState(true);
   // console.log(card);
   const axiosSecure = useAxiosSecure();

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
@@ -8,12 +8,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { ca } from "date-fns/locale";
+import { use } from "react";
 
 const Details = () => {
   const { dark } = useContext(AuthContext);
-  const data = useLoaderData();
+  const dat = useLoaderData();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const [data, setData] = useState(dat[0]);
+  const { id } = useParams();
 
   // console.log(user);
   const {
@@ -33,7 +36,7 @@ const Details = () => {
     email,
     dateLost,
     lostlocation,
-  } = data[0];
+  } = data;
 
   // console.log(dateRecovered);
   // States for modal
@@ -45,7 +48,7 @@ const Details = () => {
 
   useEffect(() => {
     axios
-      .get(`https://lost-founds-server.vercel.app/api/recovered-item/${_id}`)
+      .get(`https://lostserver.vercel.app/api/recovered-item/${_id}`)
       .then((res) => {
         setRec(res.data);
       });
@@ -53,7 +56,7 @@ const Details = () => {
 
   useEffect(() => {
     axios
-      .get(`https://lost-founds-server.vercel.app/api/recovered-item/${itemId}`)
+      .get(`https://lostserver.vercel.app/api/recovered-item/${itemId}`)
       .then((res) => {
         setRecoveredData(res.data);
       });
@@ -104,7 +107,7 @@ const Details = () => {
 
     try {
       const recoveryResponse = await fetch(
-        "https://lost-founds-server.vercel.app/api/recovered-items",
+        "https://lostserver.vercel.app/api/recovered-items",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -113,7 +116,7 @@ const Details = () => {
       );
 
       // const statusResponse = await fetch(
-      //   `https://lost-founds-server.vercel.app/api/items/${_id}`,
+      //   `https://lostserver.vercel.app/api/items/${_id}`,
       //   {
       //     method: "PATCH",
       //     headers: { "Content-Type": "application/json" },
@@ -126,12 +129,20 @@ const Details = () => {
         setModalOpen(false); // Close the modal
 
         axios
-          .get(
-            `https://lost-founds-server.vercel.app/api/recovered-item/${_id}`
-          )
+          .get(`https://lostserver.vercel.app/api/recovered-item/${_id}`)
           .then((res) => {
             setRec(res.data);
           });
+
+        try {
+          const response = await axios.put(
+            `https://lostserver.vercel.app/lostandfinds/${_id}`,
+            recoveryData
+          );
+          console.log("Update Response:", response.data);
+        } catch (error) {
+          console.error("Error updating recovery data:", error);
+        }
       } else {
         Swal.fire("Error", "Failed to mark item as recovered", "error");
       }

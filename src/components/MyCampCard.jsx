@@ -31,7 +31,7 @@ const MyCampCard = ({ d, setDonations }) => {
       .then((result) => {
         if (result.isConfirmed) {
           // delete data
-          fetch(`https://lost-founds-server.vercel.app/myitems/${id}`, {
+          fetch(`https://lostserver.vercel.app/myitems/${id}`, {
             method: "DELETE",
           })
             .then((res) => res.json())

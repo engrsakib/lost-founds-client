@@ -55,9 +55,7 @@ const router = createBrowserRouter([
           </Privete>
         ),
         loader: ({ params }) =>
-          fetch(
-            `https://lost-founds-server.vercel.app/itemsUpadte/${params.id}`
-          ),
+          fetch(`https://lostserver.vercel.app/itemsUpadte/${params.id}`),
       },
       {
         path: "/lost-finds/all/details/:id",
@@ -67,9 +65,7 @@ const router = createBrowserRouter([
           </Privete>
         ),
         loader: ({ params }) =>
-          fetch(
-            `https://lost-founds-server.vercel.app/lost-finds/${params.id}`
-          ),
+          fetch(`https://lostserver.vercel.app/lost-finds/${params.id}`),
       },
       {
         path: "/recover/all/details/:id",
@@ -79,7 +75,7 @@ const router = createBrowserRouter([
           </Privete>
         ),
         loader: ({ params }) =>
-          fetch(`https://lost-founds-server.vercel.app/recover/${params.id}`),
+          fetch(`https://lostserver.vercel.app/recover/${params.id}`),
       },
       {
         path: "/donation/all-campagion/details/donated/:id",
@@ -89,7 +85,7 @@ const router = createBrowserRouter([
           </Privete>
         ),
         loader: ({ params }) =>
-          fetch(`https://lost-founds-server.vercel.app/donations/${params.id}`),
+          fetch(`https://lostserver.vercel.app/donations/${params.id}`),
       },
       {
         path: "/donation/add-campagion",

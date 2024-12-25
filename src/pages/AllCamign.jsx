@@ -26,7 +26,7 @@ const AllCamign = () => {
   useEffect(() => {
     setLoadding(true);
     axios
-      .get("https://lost-founds-server.vercel.app/lostandfinds")
+      .get("https://lostserver.vercel.app/lostandfinds")
       .then((data) => {
         setData(data.data); // Update state with fetched data
         setLoadding(false); // End loadding
@@ -38,7 +38,7 @@ const AllCamign = () => {
   }, []);
 
   const handleSort = () => {
-    fetch(`https://lost-founds-server.vercel.app/lostandfinds/sorted`)
+    fetch(`https://lostserver.vercel.app/lostandfinds/sorted`)
       .then((res) => res.json())
       .then((data) => {
         setData(data); // Update state with fetched data
@@ -60,7 +60,7 @@ const AllCamign = () => {
     e.preventDefault();
     const search = e.target[0].value;
     // console.log(search);
-    fetch(`https://lost-founds-server.vercel.app/lostandfinds/search/${search}`)
+    fetch(`https://lostserver.vercel.app/lostandfinds/search/${search}`)
       .then((res) => res.json())
       .then((data) => {
         setData(data);

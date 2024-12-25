@@ -5,7 +5,7 @@ import { auth } from "../Firebase/firebase.congig";
 import Swal from "sweetalert2";
 
 const axiosInstance = axios.create({
-  baseURL: "https://lost-founds-server.vercel.app",
+  baseURL: "https://lostserver.vercel.app",
   withCredentials: true,
 });
 
@@ -13,6 +13,7 @@ const useAxiosSecure = () => {
   useEffect(() => {
     axiosInstance.interceptors.response.use(
       (response) => {
+        console.log(response);
         return response;
       },
       (error) => {
@@ -22,6 +23,7 @@ const useAxiosSecure = () => {
             .then(() => {
               // Sign-out successful.
               Swal.fire("SingOut!", "", "success");
+              console.log(error.response);
             })
             .catch((error) => {
               // An error happened.
