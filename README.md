@@ -6,8 +6,8 @@ A web platform dedicated to managing lost and found items, enabling users to cre
 [Visit Sakib Swift Launch](https://sakib-welfare-champine.netlify.app/)
 
 ## GitHub Repositories
-- **Server Repository:** [b11-a11-server-side-engrsakib](https://github.com/programming-hero-web-course2/b10a11-server-side-engrsakib)
-- **Client Repository:** [b11-a11-client-side-engrsakib](https://github.com/programming-hero-web-course2/b10a11-client-side-engrsakib)
+- **Server Repository:** [server-side-engrsakib](https://github.com/programming-hero-web-course2/b10a11-server-side-engrsakib)
+- **Client Repository:** [client-side-engrsakib](https://github.com/programming-hero-web-course2/b10a11-client-side-engrsakib)
 
 ## Features
 - 🌟 **Lost and Found Posts**: Users can create posts to report lost or found items with detailed descriptions and images.
