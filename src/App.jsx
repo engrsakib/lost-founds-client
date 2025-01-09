@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-      <header className="container w-full mx-auto ">
+      <header className=" bg-white w-full mx-auto z-50 sticky top-0">
         <Header></Header>
       </header>
 
