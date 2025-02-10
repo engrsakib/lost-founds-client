@@ -85,7 +85,7 @@ const WeightLossSection = () => {
       <div className="lg:w-1/2 mt-8 lg:mt-0 flex justify-center items-center">
         <div className="relative">
           <img
-            src="https://img.freepik.com/free-photo/portrait-young-woman-holding-paper-craft-bags-standing-high-quality-photo_2831-10541.jpg?t=st=1734807232~exp=1734810832~hmac=f5b0a0921396850197a348b71db1760b40519b2da523964e44bd98d7d6871afb&w=1380"
+            src="/4.jpg"
             alt="Phone Mockup"
             className="m-3 h-auto rounded-lg shadow-lg"
           />

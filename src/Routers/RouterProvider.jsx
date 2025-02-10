@@ -59,21 +59,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/lost-finds/all/details/:id",
-        element: (
-          <Privete>
-            <Details></Details>
-          </Privete>
-        ),
+        element: <Details></Details>,
         loader: ({ params }) =>
           fetch(`https://lostserver.vercel.app/lost-finds/${params.id}`),
       },
       {
         path: "/recover/all/details/:id",
-        element: (
-          <Privete>
-            <Details></Details>
-          </Privete>
-        ),
+        element: <Details></Details>,
         loader: ({ params }) =>
           fetch(`https://lostserver.vercel.app/recover/${params.id}`),
       },

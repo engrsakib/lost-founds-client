@@ -10,8 +10,7 @@ const Mission = () => {
       id: 1,
       icon: "📦", // Icon for Found Items
       title: "Found Items",
-      description:
-        "Browse items reported found to reconnect them with their rightful owners.",
+      description: "Browse items reported found to reconnect them.",
     },
     {
       id: 2,
@@ -77,11 +76,11 @@ const Mission = () => {
                 >
                   {mission.description}
                 </p>
-                <div className="mt-6 text-center">
-                  <button className="btn btn-sm btn-outline btn-primary group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300">
+                {/* <div className="mt-6 text-center">
+                  <button className="btn btn-sm btn-outline btn-info group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300">
                     Read more
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           ))}

@@ -5,48 +5,47 @@ const Slider = () => {
     return (
       <div>
         <Carousel>
-          <div className="w-full h-[500px]">
+          <div className="w-full h-[700px]">
             <img
               className="slder_img"
               src="/5.jpg"
             />
-           =
           </div>
-          <div className="w-full h-[500px]">
+          <div className="w-full h-[700px]">
             <img
               className="slder_img"
               src="/6.jpg"
             />
             
           </div>
-          <div className="w-full h-[500px]">
+          <div className="w-full h-[700px]">
             <img
               className="slder_img"
               src="/3.jpg"
             />
           
           </div>
-          <div className="w-full h-[500px]">
+          <div className="w-full h-[700px]">
             <img
               className="slder_img"
               src="/7.jpg"
             />
           
           </div>
-          <div className="w-full h-[500px]">
+          <div className="w-full h-[700px]">
             <img
               className="slder_img"
               src="/1.jpg"
             />
           </div>
-          <div className="w-full h-[500px]">
+          <div className="w-full h-[700px]">
             <img
               className="slder_img"
               src="/4.jpg"
             />
             
           </div>
-          <div className="w-full h-[500px] aspect-w-16 aspect-h-9">
+          <div className="w-full h-[700px]">
             <img
               className="slder_img"
               src="/2.jpg"

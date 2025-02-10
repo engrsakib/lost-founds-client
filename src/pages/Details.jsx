@@ -186,15 +186,22 @@ const Details = () => {
             Name: {name} <br /> Mail: {mail}
           </p>
 
-          {type === "lost" ? (
-            <button className="btn btn-primary w-full my-4" onClick={checkUser}>
-              Found This!
-            </button>
-          ) : (
-            <button className="btn btn-primary w-full my-4" onClick={checkUser}>
-              This is Mine!
-            </button>
-          )}
+          {user &&
+            (type === "lost" ? (
+              <button
+                className="btn btn-primary w-full my-4"
+                onClick={checkUser}
+              >
+                Found This!
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary w-full my-4"
+                onClick={checkUser}
+              >
+                This is Mine!
+              </button>
+            ))}
 
           <h3 className="mt-6 text-lg font-semibold">Other Information</h3>
           <ul className="mt-4 space-y-2">
