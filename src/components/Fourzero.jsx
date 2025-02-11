@@ -9,8 +9,8 @@ const Fourzero = () => {
         
         <div className="flex flex-col items-center my-6">
           <img
-            className="mx-auto"
-            src="https://i.ibb.co.com/rGJ5gyp/error-abstract-concept-illustration-error-webpage-browser-download-failure-page-found-server-request.jpg"
+            className="mx-auto w-[350px] md:w-[650px] rounded-lg"
+            src="/7741849_3747371.jpg"
             alt=""
           />
           <button

@@ -81,7 +81,7 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  // console.log(user);
+  console.log(user);
   // loading
   if (loadding) {
     return <Loading></Loading>;

@@ -27,6 +27,7 @@ const Home = () => {
         <ActiveDon></ActiveDon>
         <FAQ></FAQ>
         </section>
+        
         {/* type writer end*/}
         <Helmet>
           <meta charSet="utf-8" />

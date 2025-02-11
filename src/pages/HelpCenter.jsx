@@ -41,7 +41,7 @@ const HelpCenter = () => {
   const { user, dark } = useContext(AuthContext);
   const [isDarkMode, setIsDarkMode] = useState(dark);
   const [email, setEmail] = useState("");
-
+  console.log(user)
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
