@@ -16,6 +16,7 @@ import Donated from "../components/Donated";
 import Fourzero from "../components/Fourzero";
 import Public from "./Public";
 import Profile from "../pages/Profile";
+import HelpCenter from "../pages/HelpCenter";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/finds-losts/all-finds",
         element: <AllCamign></AllCamign>,
+      },
+      {
+        path: "/help-center",
+        element: <HelpCenter></HelpCenter>,
       },
       {
         path: "/items/update/:id",
