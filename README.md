@@ -2,7 +2,8 @@
 
 A web platform dedicated to managing lost and found items, enabling users to create posts, browse listings, and recover lost belongings effectively.
 
-![Screen](./dist/screen.jpg)
+![Screen](https://i.ibb.co/8thG1hN/screen.jpg)
+
 ## Live Site
 [Visit Sakib Swift Launch](https://sakib-welfare-champine.netlify.app/)
 
