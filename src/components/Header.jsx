@@ -59,6 +59,18 @@ const Header = () => {
       >
         Lost & Found
       </NavLink>
+      <NavLink
+        className={({ isActive }) =>
+          `px-4 py-2 rounded ${
+            isActive
+              ? "bg-green-500 text-white"
+              : "bg-transparent hover:bg-red-400"
+          } ${dark ? "text-gray-50" : "text-gray-800"}`
+        }
+        to={`/help-center`}
+      >
+        Help Center
+      </NavLink>
     </>
   );
 
